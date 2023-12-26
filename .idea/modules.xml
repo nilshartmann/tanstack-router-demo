@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/recipify.iml" filepath="$PROJECT_DIR$/recipify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recipify-backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/recipify-backend.main.iml" />
     </modules>
   </component>
 </project>
