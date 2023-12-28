@@ -9,29 +9,29 @@ paths:
   /api/recipes:
     get:
       tags:
-      - recipify-controller
+      - recipe-controller
       operationId: recipes
       parameters:
       - name: page
         in: query
-        description: Zero-based page index (0..N)
+        required: false
         schema:
           type: integer
-          default: 0
+          format: int32
       - name: size
         in: query
-        description: The size of the page to be returned
+        required: false
         schema:
           type: integer
-          default: 20
+          format: int32
       - name: sort
         in: query
-        description: "Sorting criteria in the format: property,(asc|desc). Default\
-          \ sort order is ascending. Multiple sort criteria are supported."
+        required: false
         schema:
-          type: array
-          items:
-            type: string
+          type: string
+          enum:
+          - time
+          - rating
       responses:
         "200":
           description: OK
@@ -39,11 +39,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PageResponseRecipeDto'
+  /api/recipes/{recipeId}:
+    get:
+      tags:
+      - recipe-controller
+      operationId: getRecipe
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecipeResponse'
+  /api/recipes/{recipeId}/feedbacks:
+    get:
+      tags:
+      - recipe-controller
+      operationId: getFeedbacks
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecipeFeedbacksResponse'
 components:
   schemas:
     CategoryDto:
       required:
       - description
+      - icon
       - title
       - type
       type: object
@@ -54,30 +93,36 @@ components:
           type: string
         description:
           type: string
-    DifficultyLevel:
-      type: object
+        icon:
+          type: string
     PageResponseRecipeDto:
       required:
       - content
       - hasNext
       - hasPrevious
+      - totalPages
       type: object
       properties:
         content:
           type: array
           items:
             $ref: '#/components/schemas/RecipeDto'
+        totalPages:
+          type: integer
+          format: int32
         hasNext:
           type: boolean
         hasPrevious:
           type: boolean
     RecipeDto:
       required:
+      - averageRating
       - categories
       - cookTime
-      - difficulty
+      - createdAt
       - headline
       - id
+      - mealType
       - preparationTime
       - title
       - userFullname
@@ -86,6 +131,9 @@ components:
         id:
           type: integer
           format: int64
+        createdAt:
+          type: string
+          format: date-time
         userFullname:
           type: string
         title:
@@ -102,5 +150,117 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CategoryDto'
-        difficulty:
-          $ref: '#/components/schemas/DifficultyLevel'
+        mealType:
+          type: string
+        averageRating:
+          type: number
+          format: double
+    DetailedRecipeDto:
+      required:
+      - averageRating
+      - categories
+      - cookTime
+      - createdAt
+      - headline
+      - id
+      - ingredients
+      - instructions
+      - mealType
+      - preparationTime
+      - title
+      - userFullname
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        userFullname:
+          type: string
+        title:
+          type: string
+        headline:
+          type: string
+        preparationTime:
+          type: integer
+          format: int32
+        cookTime:
+          type: integer
+          format: int32
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDto'
+        mealType:
+          type: string
+        averageRating:
+          type: number
+          format: double
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+    GetRecipeResponse:
+      required:
+      - recipe
+      type: object
+      properties:
+        recipe:
+          $ref: '#/components/schemas/DetailedRecipeDto'
+    Ingredient:
+      type: object
+      properties:
+        name:
+          type: string
+        amount:
+          type: number
+          format: double
+        unit:
+          type: string
+        orderNo:
+          type: integer
+          format: int32
+    Instruction:
+      type: object
+      properties:
+        orderNo:
+          type: integer
+          format: int32
+        description:
+          type: string
+    Feedback:
+      required:
+      - comment
+      - commenter
+      - createdAt
+      - rating
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        commenter:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        comment:
+          type: string
+    GetRecipeFeedbacksResponse:
+      required:
+      - feedbacks
+      type: object
+      properties:
+        feedbacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Feedback'

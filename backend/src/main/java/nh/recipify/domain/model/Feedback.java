@@ -1,6 +1,8 @@
 package nh.recipify.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -11,19 +13,25 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @NotNull
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
+    @NotNull
     private String commenter;
 
     @Column(nullable = false)
+    @NotNull
     private Integer rating;
 
     @Column(nullable = false)
+    @NotNull
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="recipe_id", nullable = false)
+    @JsonIgnore
     private Recipe recipe;
 
     public Long getId() {

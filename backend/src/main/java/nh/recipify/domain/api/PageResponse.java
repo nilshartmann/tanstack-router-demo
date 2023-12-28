@@ -6,10 +6,13 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public record PageResponse<T>(@NotNull List<T> content,
+                              @NotNull int totalPages,
                               @NotNull boolean hasNext,
                               @NotNull boolean hasPrevious) {
 
     public static <T> PageResponse<T> of(Page<T> target) {
-        return new PageResponse<>(target.getContent(), target.hasNext(), target.hasPrevious());
+        return new PageResponse<>(target.getContent(),
+            target.getTotalPages(),
+            target.hasNext(), target.hasPrevious());
     }
 }

@@ -1,15 +1,16 @@
 package nh.recipify.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-import nh.recipify.domain.api.RecipeViews;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "recipes")
@@ -19,45 +20,44 @@ public class Recipe {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @CreatedDate
-    @Column(name="created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name="updated_at", nullable = false )
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     private String title;
 
     @Column(nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     private String headline;
 
     @Column(nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     private int preparationTime;
 
     @Column(nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     private int cookTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="difficulty_level_id", nullable = false)
-    private DifficultyLevel difficulty;
-
-    @Column(nullable = false)
-    private String steps;
+    @JoinColumn(name = "meal_type_id", nullable = false)
+    private MealType mealType;
 
     @OneToMany(mappedBy = "recipe")
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "recipe")
+    private List<Instruction> instructions;
+
+    @OneToMany(mappedBy = "recipe")
     private List<Feedback> feedbacks;
+
+    @Column(name = "average_rating", precision = 10, scale = 2, nullable = false, insertable = false, updatable = false)
+    private BigDecimal averageRating;
 
     @ManyToMany
     @JoinTable(
@@ -99,24 +99,31 @@ public class Recipe {
         return cookTime;
     }
 
-    public DifficultyLevel getDifficulty() {
-        return difficulty;
-    }
-
-    public String getSteps() {
-        return steps;
+    public MealType getMealType() {
+        return mealType;
     }
 
     public List<Ingredient> getIngredients() {
-        return ingredients;
+        return ingredients.stream()
+            .sorted(Comparator.comparingInt(Ingredient::getOrderNo))
+            .collect(Collectors.toList());
+    }
+
+    public List<Instruction> getInstructions() {
+        return instructions.stream()
+            .sorted(Comparator.comparingInt(Instruction::getOrderNo))
+            .collect(Collectors.toList());
     }
 
     public List<Feedback> getFeedbacks() {
         return feedbacks;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public List<Category> getCategories() {
+        return categories.stream()
+            .sorted(Comparator.comparing((Category c) -> c.getType().getName())
+                .thenComparing(Category::getTitle))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -130,9 +137,9 @@ public class Recipe {
                ", headline='" + headline + '\'' +
                ", preparationTime=" + preparationTime +
                ", cookTime=" + cookTime +
-               ", difficulty=" + difficulty +
-               ", steps='" + steps + '\'' +
+               ", difficulty=" + mealType +
                ", ingredients=" + ingredients +
+               ", instructions=" + instructions +
                ", categories=" + categories +
                ", feedbacks=" + feedbacks +
                '}';

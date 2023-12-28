@@ -5,11 +5,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RecipeRepository extends Repository<Recipe, Long> {
 
     List<Recipe> findByUserId(Long id);
 
     Page<Recipe> findAllBy(Pageable p);
+
+    Optional<Recipe> findById(Long id);
 
 }

@@ -1,5 +1,6 @@
 package nh.recipify.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -9,10 +10,12 @@ import java.util.Objects;
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @ManyToOne
     @JoinColumn(name="recipe_id", nullable = false)
+    @JsonIgnore
     private Recipe recipe;
 
     @Column(nullable = false)

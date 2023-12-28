@@ -12,19 +12,23 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "openapi": "curl http://localhost:8080/v3/api-docs>api-doc.json",
-    "openapi:generate": "typed-openapi -r zod generated-api-doc.yaml -o src/api-types.ts && prettier --write src/api-types.ts",
+    "openapi:generate": "typed-openapi -r zod generated-api-doc.yaml -o src/components/api-types.ts && prettier --write src/components/api-types.ts",
     "openapi:watch": "onchange -i generated-api-doc.yaml -- pnpm openapi:generate"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.14.6",
     "@tanstack/react-query-devtools": "^5.14.7",
+    "@tanstack/react-router": "^1.0.0",
+    "bootstrap-icons": "^1.11.2",
     "clsx": "^2.0.0",
+    "date-fns": "^3.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.12.1",
+    "@tanstack/router-devtools": "^1.0.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -41,7 +45,7 @@
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
-    "tailwindcss": "^3.3.6",
+    "tailwindcss": "^3.4.0",
     "typed-openapi": "^0.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"

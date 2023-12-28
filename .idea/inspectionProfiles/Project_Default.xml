@@ -15,12 +15,12 @@
         <language minSize="87" name="TypeScript" />
       </Languages>
     </inspection_tool>
-    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="FieldCanBeLocal" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FieldMayBeFinal" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FinalPrivateMethod" enabled="false" level="WARNING" enabled_by_default="false" editorAttributes="NOT_USED_ELEMENT_ATTRIBUTES" />
     <inspection_tool class="FinalStaticMethod" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FormSpellChecking" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="JSUnusedLocalSymbols" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JavadocBlankLines" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MoveFieldAssignmentToInitializer" enabled="false" level="INFORMATION" enabled_by_default="false" />
     <inspection_tool class="NonFinalFieldInEnum" enabled="false" level="WARNING" enabled_by_default="false" />

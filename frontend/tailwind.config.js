@@ -21,6 +21,14 @@ export default {
       },
       orange_2: {
         DEFAULT: "#F89223",
+        200: "#f6e3cf",
+        500: "#E18521",
+      },
+      green: {
+        DEFAULT: "#6FB43F",
+      },
+      goldgray: {
+        DEFAULT: "#F4F3F0",
       },
     },
     extend: {
@@ -29,6 +37,16 @@ export default {
         inter: ["inter", ...defaultTheme.fontFamily.sans],
         barlow: ["barlow", ...defaultTheme.fontFamily.sans],
       },
+    },
+    screens: {
+      sm: "767px",
+      // => @media (min-width: 767px) { ... }
+
+      md: "1024px",
+      // => @media (min-width: 960px) { ... }
+
+      lg: "1200px",
+      // => @media (min-width: 1440px) { ... }
     },
   },
   plugins: [],

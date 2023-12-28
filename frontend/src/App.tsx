@@ -1,17 +1,104 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import Landing from "./Landing.tsx";
+import Landing from "./pages/Landing.tsx";
 import { Suspense } from "react";
+import {
+  Outlet,
+  RootRoute,
+  Route,
+  Router,
+  RouterProvider,
+} from "@tanstack/react-router";
+import RecipeListPage from "./pages/recipes/RecipeListPage.tsx";
+import AppLayout from "./pages/recipes/AppLayout.tsx";
+import z from "zod";
+import RecipePage from "./pages/recipes/$recipeId/RecipePage.tsx";
+import ShopingListPage from "./pages/recipes/$recipeId/shoppinglist/ShoppingListPage.tsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
+const rootRoute = new RootRoute({
+  component: () => (
+    <>
+      <Outlet />
+      {/*<TanStackRouterDevtools />*/}
+    </>
+  ),
+});
+
+const indexRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: Landing,
+});
+
+const appRoute = new Route({
+  getParentRoute() {
+    return rootRoute;
+  },
+  path: "recipes",
+  component: AppLayout,
+});
+
+const RecipePageListParams = z.object({
+  page: z.number().optional(),
+  orderBy: z.enum(["time", "rating"]).optional(),
+});
+type TRecipePageListParams = z.infer<typeof RecipePageListParams>;
+
+export const recipeListRoute = new Route({
+  path: "/",
+  getParentRoute() {
+    return appRoute;
+  },
+  validateSearch: (search: Record<string, unknown>): TRecipePageListParams =>
+    RecipePageListParams.parse(search),
+  component: RecipeListPage,
+});
+
+export const recipeRoute = new Route({
+  path: "$recipeId",
+  getParentRoute() {
+    return appRoute;
+  },
+  component: RecipePage,
+});
+
+// appRoute.addChildren([recipeRoute]);
+
+export const shoppingListRoute = new Route({
+  path: "$recipeId/shoppinglist",
+  getParentRoute() {
+    return appRoute;
+  },
+  component: ShopingListPage,
+});
+
+// recipeRoute.addChildren([shoppingListRoute]);
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  appRoute.addChildren([recipeListRoute, recipeRoute, shoppingListRoute]),
+]);
+const router = new Router({ routeTree });
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<h1>Loading</h1>}>
-        <Landing />
+        <RouterProvider router={router} />
       </Suspense>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/*<ReactQueryDevtools initialIsOpen={false} />*/}
     </QueryClientProvider>
   );
 }

@@ -1,7 +1,10 @@
 import clsx from "clsx";
+import { Link, LinkProps } from "@tanstack/react-router";
+
+type To = LinkProps["to"];
 
 type AppLinkProps = {
-  href: string;
+  to: To;
   size?: "sm" | "regular" | "lg";
   variant?: "button" | "link";
   children: React.ReactNode;
@@ -9,15 +12,15 @@ type AppLinkProps = {
 
 export default function AppLink({
   size = "regular",
-  href,
+  to,
   variant,
   children,
 }: AppLinkProps) {
   return (
-    <a
+    <Link
       className={clsx(
         variant === "button" &&
-          "text-white hover:bg-orange_2 hover:text-white font-inter rounded border-2 border-red bg-red font-normal hover:cursor-pointer hover:border-red",
+          "rounded border-2 border-red bg-red font-inter font-normal text-white hover:cursor-pointer hover:border-red hover:bg-orange_2 hover:text-white hover:shadow-2xl hover:shadow-red",
         variant === "link" &&
           "&& border-b-main text-primary decoration-primary text-3xl font-bold hover:underline hover:decoration-2",
 
@@ -33,9 +36,9 @@ export default function AppLink({
             variant === "button" && size === "sm",
         },
       )}
-      href={href}
+      to={to}
     >
       {children}
-    </a>
+    </Link>
   );
 }

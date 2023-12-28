@@ -16,6 +16,9 @@ public class CategoryType {
     @NotNull
     private String name;
 
+    @NotNull
+    private String icon;
+
     protected CategoryType() {}
 
     public CategoryType(String name) {
@@ -24,5 +27,9 @@ public class CategoryType {
 
     public String getName() {
         return name;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }
