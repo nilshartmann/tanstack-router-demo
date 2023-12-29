@@ -124,6 +124,7 @@ export default function RecipePage() {
                   className={
                     "mb-4 border-b border-dotted border-gray-300 pb-4 ps-4"
                   }
+                  key={i.name}
                 >
                   <i className="fa-regular fa-circle-check me-2 text-orange_2 "></i>
                   <span className={"font-inter text-gray-500 "}>
