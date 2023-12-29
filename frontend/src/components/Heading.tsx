@@ -9,14 +9,7 @@ type HeadingProps = {
 
 export function H1({ children, style = "default", className }: HeadingProps) {
   return (
-    <h1
-      className={clsx(
-        `text-3xl`,
-        style === "primary" &&
-          "border-b-[1px] border-b-grey-3 font-bold text-primary",
-        className,
-      )}
-    >
+    <h1 className={clsx("font-space text-3xl font-bold", className)}>
       {children}
     </h1>
   );
@@ -28,7 +21,7 @@ export function H2({ children, style = "default", className }: HeadingProps) {
       className={clsx(
         `text-xl`,
         style === "primary" &&
-          "border-b-[1px] border-b-grey-3 font-bold text-primary",
+          "border-b-grey-3 text-primary border-b-[1px] font-bold",
         className,
       )}
     >

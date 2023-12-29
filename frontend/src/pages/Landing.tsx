@@ -41,6 +41,15 @@ export default function LandingPage() {
             Let me in - I'm hungry! 😋
           </AppLink>
         </div>
+        <div className={"mt-10 flex justify-center space-x-8"}>
+          <AppLink variant={"button"} to={"/about"}>
+            About us
+          </AppLink>
+
+          <AppLink variant={"button"} to={"/privacy"}>
+            Privacy
+          </AppLink>
+        </div>
       </div>
     </main>
   );
