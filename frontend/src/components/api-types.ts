@@ -10,7 +10,7 @@ export const CategoryDto = z.object({
 
 export type RecipeDto = z.infer<typeof RecipeDto>;
 export const RecipeDto = z.object({
-  id: z.number(),
+  id: z.string(),
   createdAt: z.string(),
   userFullname: z.string(),
   title: z.string(),
@@ -46,7 +46,7 @@ export const Ingredient = z.object({
 
 export type DetailedRecipeDto = z.infer<typeof DetailedRecipeDto>;
 export const DetailedRecipeDto = z.object({
-  id: z.number(),
+  id: z.string(),
   createdAt: z.string(),
   userFullname: z.string(),
   title: z.string(),
@@ -101,7 +101,7 @@ export const get_GetRecipe = {
   path: z.literal("/api/recipes/{recipeId}"),
   parameters: z.object({
     path: z.object({
-      recipeId: z.number(),
+      recipeId: z.string(),
     }),
   }),
   response: GetRecipeResponse,
@@ -113,7 +113,7 @@ export const get_GetFeedbacks = {
   path: z.literal("/api/recipes/{recipeId}/feedbacks"),
   parameters: z.object({
     path: z.object({
-      recipeId: z.number(),
+      recipeId: z.string(),
     }),
   }),
   response: GetRecipeFeedbacksResponse,

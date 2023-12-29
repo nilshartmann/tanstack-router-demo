@@ -28,7 +28,7 @@ export function useGetAllRecipesQuery(
 }
 
 export function useGetRecipeQuery(
-  recipeId: number,
+  recipeId: string,
 ): UseSuspenseQueryResult<GetRecipeResponse> {
   return useSuspenseQuery<GetRecipeResponse>({
     queryKey: ["recipes", recipeId],
@@ -43,7 +43,7 @@ export function useGetRecipeQuery(
 }
 
 export function useGetRecipeFeedbacksQuery(
-  recipeId: number,
+  recipeId: string,
 ): UseSuspenseQueryResult<GetRecipeFeedbacksResponse> {
   return useSuspenseQuery<GetRecipeFeedbacksResponse>({
     queryKey: ["recipes", recipeId, "feedbacks"],

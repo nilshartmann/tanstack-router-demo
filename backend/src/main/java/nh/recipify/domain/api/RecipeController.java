@@ -56,7 +56,9 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes/{recipeId}")
-    GetRecipeResponse getRecipe(@PathVariable long recipeId) {
+    GetRecipeResponse getRecipe(
+        @StringParameter
+        @PathVariable long recipeId) {
         var recipe = recipeRepository.findById(recipeId)
             .orElseThrow(() -> new EntityNotFoundException("Receipe not found."));
 
@@ -65,10 +67,11 @@ public class RecipeController {
         );
     }
 
-    record GetRecipeFeedbacksResponse(@NotNull List<Feedback> feedbacks){}
+    record GetRecipeFeedbacksResponse(@NotNull List<Feedback> feedbacks) {
+    }
 
     @GetMapping("/recipes/{recipeId}/feedbacks")
-    GetRecipeFeedbacksResponse getFeedbacks(@PathVariable long recipeId) {
+    GetRecipeFeedbacksResponse getFeedbacks(@StringParameter @PathVariable long recipeId) {
 
         var feedbacks = feedbackRepository.getFeedbacksByRecipeIdOrderByCreatedAt(recipeId);
 

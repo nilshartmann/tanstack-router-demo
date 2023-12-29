@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+
 import {
   NotFoundRoute,
   Outlet,
@@ -90,7 +92,7 @@ export const recipeRoute = new Route({
     console.log("LOADING RECIPE DATA", params.recipeId);
     return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
       path: {
-        recipeId: parseInt(params.recipeId),
+        recipeId: params.recipeId,
       },
     });
   },

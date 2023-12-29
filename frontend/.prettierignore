@@ -6,3 +6,10 @@ public/assets
 app/assets
 
 tsconfig.json
+.eslintrc.cjs
+index.html
+
+# Generated:
+public/fontawesome/
+generated-api-doc.yaml
+public/fonts/google-fonts.css

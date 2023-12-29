@@ -17,8 +17,8 @@ type CheckButtonProps = {
 export function CheckButton({ checked, children, orderBy }: CheckButtonProps) {
   const buttonClassName = clsx(
     "inline-flex  items-center justify-center rounded px-4 py-2 font-barlow text-white",
-    checked || "hover:bg-orange_2-500 bg-orange_2 ",
-    checked && "hover:bg-green bg-green ",
+    checked || "bg-orange_2 hover:bg-orange_2-500 ",
+    checked && "bg-green hover:bg-green ",
   );
 
   const iconClassName = clsx(
@@ -102,8 +102,8 @@ export function PageButton({ children, state, targetPage }: PageButtonProps) {
   const buttonClassName = clsx(
     "inline-flex h-12 w-12 items-center justify-center rounded px-4 py-2 font-barlow text-white",
     state === "selectable" &&
-      "hover:bg-orange_2-500 bg-orange_2 hover:underline",
-    state === "active" && "hover:bg-green bg-green underline",
+      "bg-orange_2 hover:bg-orange_2-500 hover:underline",
+    state === "active" && "bg-green underline hover:bg-green",
     state === "disabled" && "bg-gray-300",
   );
   return (
@@ -183,7 +183,7 @@ export default function RecipeListPage() {
                   </div>
                   <div className={"mt-4 flex"}>
                     <div className={"mt-4 space-y-2"}>
-                      <p className="border-green text-green me-2 inline-block rounded border bg-white p-2 text-[15px]">
+                      <p className="me-2 inline-block rounded border border-green bg-white p-2 text-[15px] text-green">
                         <i className="fa-regular fa-clock mr-2"></i>
                         {formatMinuteDuration(
                           recipe.cookTime + recipe.preparationTime,
@@ -193,7 +193,7 @@ export default function RecipeListPage() {
                         <p
                           key={c.description + "_" + c.title}
                           className={
-                            "border-green text-green me-2 inline-block rounded border bg-white p-2 text-[15px]"
+                            "me-2 inline-block rounded border border-green bg-white p-2 text-[15px] text-green"
                           }
                         >
                           <i className={c.icon} />

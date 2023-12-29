@@ -9,7 +9,7 @@ import java.util.List;
 
 public record RecipeDto(
 
-    @NotNull Long id,
+    @NotNull String id,
     @NotNull LocalDateTime createdAt,
     @NotNull String userFullname,
     @NotNull String title,
@@ -23,7 +23,7 @@ public record RecipeDto(
 
     static RecipeDto forRecipe(Recipe r) {
         return new RecipeDto(
-            r.getId(),
+            r.getId().toString(),
             r.getCreatedAt(),
             r.getUser().getFullname(),
             r.getTitle(),

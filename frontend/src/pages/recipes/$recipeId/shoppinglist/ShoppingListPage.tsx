@@ -7,7 +7,7 @@ export default function ShopingListPage() {
 
   const {
     data: { recipe },
-  } = useGetRecipeQuery(parseInt(recipeId));
+  } = useGetRecipeQuery(recipeId);
 
   return (
     <div className={"container mx-auto mt-8 md:w-1/2"}>

@@ -19,7 +19,7 @@ export default function RecipePage() {
 
   return (
     <div className={"mb-20"}>
-      <div className="bg-goldgray mt-8 pb-12 pe-8 ps-8 pt-12">
+      <div className="mt-8 bg-goldgray pb-12 pe-8 ps-8 pt-12">
         <div
           className={"container mx-auto flex flex-col sm:flex-row sm:space-x-8"}
         >
@@ -53,7 +53,7 @@ export default function RecipePage() {
                       <p
                         key={c.description + "_" + c.title}
                         className={
-                          "border-green text-green me-2 inline-block rounded border bg-white p-2 text-[15px]"
+                          "me-2 inline-block rounded border border-green bg-white p-2 text-[15px] text-green"
                         }
                       >
                         <i className={c.icon} />
@@ -104,7 +104,7 @@ export default function RecipePage() {
           </div>
         </div>
         <div className={"w-1/3"}>
-          <div className={"border-1 bg-goldgray w-full rounded-2xl p-8"}>
+          <div className={"border-1 w-full rounded-2xl bg-goldgray p-8"}>
             <div className={"mb-8 mt-4 flex items-end justify-between ps-4"}>
               <h2 className={"font-space text-3xl font-bold"}>Ingredients</h2>
               <div className={"font-inter text-gray-500 "}>
@@ -133,7 +133,7 @@ export default function RecipePage() {
               );
             })}
           </div>
-          <div className={"border-1 bg-goldgray mt-8 w-full rounded-2xl p-8"}>
+          <div className={"border-1 mt-8 w-full rounded-2xl bg-goldgray p-8"}>
             <h2 className={"mb-8 mt-4 ps-4 font-space text-3xl font-bold"}>
               Cooking time
             </h2>
@@ -173,7 +173,7 @@ export default function RecipePage() {
             </div>
           </div>
 
-          <div className={"border-1 bg-goldgray mt-8 w-full rounded-2xl p-8"}>
+          <div className={"border-1 mt-8 w-full rounded-2xl bg-goldgray p-8"}>
             <h2 className={"mb-8 mt-4 ps-4 font-space text-3xl font-bold"}>
               Ratings
             </h2>
