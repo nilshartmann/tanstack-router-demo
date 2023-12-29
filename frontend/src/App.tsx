@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Landing from "./pages/Landing.tsx";
 import { Suspense } from "react";
 import {
+  NotFoundRoute,
   Outlet,
   RootRoute,
   Route,
@@ -29,6 +30,11 @@ const rootRoute = new RootRoute({
       {/*<TanStackRouterDevtools />*/}
     </>
   ),
+});
+
+const notFoundRoute = new NotFoundRoute({
+  component: () => <h1>Page not found 😢</h1>,
+  getParentRoute: () => rootRoute,
 });
 
 const indexRoute = new Route({
@@ -69,8 +75,6 @@ export const recipeRoute = new Route({
   component: RecipePage,
 });
 
-// appRoute.addChildren([recipeRoute]);
-
 export const shoppingListRoute = new Route({
   path: "$recipeId/shoppinglist",
   getParentRoute() {
@@ -79,13 +83,11 @@ export const shoppingListRoute = new Route({
   component: ShopingListPage,
 });
 
-// recipeRoute.addChildren([shoppingListRoute]);
-
 const routeTree = rootRoute.addChildren([
   indexRoute,
   appRoute.addChildren([recipeListRoute, recipeRoute, shoppingListRoute]),
 ]);
-const router = new Router({ routeTree });
+const router = new Router({ routeTree, notFoundRoute });
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
