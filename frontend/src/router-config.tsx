@@ -14,6 +14,10 @@ import ShopingListPage from "./pages/recipes/$recipeId/shoppinglist/ShoppingList
 import About from "./pages/About.tsx";
 import { Privacy } from "./pages/Privacy.tsx";
 import StaticLayoutRoute from "./pages/StaticLayoutRoute.tsx";
+import {
+  fetchFromApi,
+  getEndpointConfig,
+} from "./components/fetch-from-api.ts";
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -81,6 +85,14 @@ export const recipeRoute = new Route({
   path: "$recipeId",
   getParentRoute() {
     return recipesLayoutRoute;
+  },
+  loader: ({ params }) => {
+    console.log("LOADING RECIPE DATA", params.recipeId);
+    return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
+      path: {
+        recipeId: parseInt(params.recipeId),
+      },
+    });
   },
   component: RecipePage,
 });

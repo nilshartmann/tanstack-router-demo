@@ -1,7 +1,4 @@
-import {
-  useGetRecipeFeedbacksQuery,
-  useGetRecipeQuery,
-} from "../../../components/use-queries.ts";
+import { useGetRecipeFeedbacksQuery } from "../../../components/use-queries.ts";
 import { RatingStars } from "../../../components/RatingStars.tsx";
 import { Fragment } from "react";
 import { formatMinuteDuration } from "../../../components/FormatMinuteDuration.tsx";
@@ -9,14 +6,16 @@ import { Link } from "@tanstack/react-router";
 import { recipeRoute } from "../../../router-config.tsx";
 
 export default function RecipePage() {
-  const { recipeId } = recipeRoute.useParams();
-  const {
-    data: { recipe },
-  } = useGetRecipeQuery(parseInt(recipeId));
+  // const { recipeId } = recipeRoute.useParams();
+  // const {
+  //   data: { recipe },
+  // } = useGetRecipeQuery(parseInt(recipeId));
+
+  const { recipe } = recipeRoute.useLoaderData();
 
   const {
     data: { feedbacks = [] },
-  } = useGetRecipeFeedbacksQuery(parseInt(recipeId));
+  } = useGetRecipeFeedbacksQuery(recipe.id);
 
   return (
     <div className={"mb-20"}>
