@@ -1,9 +1,7 @@
 package nh.recipify.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
-import nh.recipify.domain.api.RecipeViews;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +19,6 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     private String fullname;
 
     public String getUsername() {

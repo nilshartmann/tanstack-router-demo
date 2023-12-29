@@ -1,9 +1,7 @@
 package nh.recipify.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import nh.recipify.domain.api.RecipeViews;
 
 @Entity
 @Table(name = "categories")
@@ -14,7 +12,6 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_type_id", nullable = false)
-    @JsonView(RecipeViews.Summary.class)
     @NotNull
     private CategoryType type;
 
