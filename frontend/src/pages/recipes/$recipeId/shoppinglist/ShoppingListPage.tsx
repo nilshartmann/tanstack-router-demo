@@ -2,7 +2,7 @@ import { useGetRecipeQuery } from "../../../../components/use-queries.ts";
 import { Link } from "@tanstack/react-router";
 import { shoppingListRoute } from "../../../../router-config.tsx";
 
-export default function ShopingListPage() {
+export default function ShoppingListPage() {
   const { recipeId } = shoppingListRoute.useParams();
 
   const {
@@ -25,6 +25,7 @@ export default function ShopingListPage() {
             className={
               "mb-8 border-b border-dotted border-gray-300 pb-8  text-2xl"
             }
+            key={i.name}
           >
             <i className="fa-regular fa-square me-4 "></i>
             <span className={"font-inter text-gray-900 "}>
