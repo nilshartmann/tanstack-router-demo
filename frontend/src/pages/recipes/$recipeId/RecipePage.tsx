@@ -19,7 +19,7 @@ export default function RecipePage() {
 
   return (
     <div className={"mb-20"}>
-      <div className="mt-8 bg-goldgray pb-12 pe-8 ps-8 pt-12">
+      <div className="mt-8  bg-goldgray pb-12 pe-8 ps-8 pt-12 ">
         <div
           className={"container mx-auto flex flex-col sm:flex-row sm:space-x-8"}
         >
