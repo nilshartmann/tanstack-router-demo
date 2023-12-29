@@ -3,9 +3,9 @@ import { H1 } from "../../components/Heading.tsx";
 import { formatMinuteDuration } from "../../components/FormatMinuteDuration.tsx";
 import clsx from "clsx";
 import ButtonBar from "../../components/ButtonBar.tsx";
-import { recipeListRoute } from "../../App.tsx";
 import { Link } from "@tanstack/react-router";
 import { RatingStars } from "../../components/RatingStars.tsx";
+import { recipeListRoute } from "../../router-config.tsx";
 
 type CheckButtonProps = {
   checked: boolean;

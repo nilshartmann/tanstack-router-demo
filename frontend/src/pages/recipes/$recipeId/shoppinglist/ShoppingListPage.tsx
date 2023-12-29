@@ -1,6 +1,6 @@
-import { shoppingListRoute } from "../../../../App.tsx";
 import { useGetRecipeQuery } from "../../../../components/use-queries.ts";
 import { Link } from "@tanstack/react-router";
+import { shoppingListRoute } from "../../../../router-config.tsx";
 
 export default function ShopingListPage() {
   const { recipeId } = shoppingListRoute.useParams();

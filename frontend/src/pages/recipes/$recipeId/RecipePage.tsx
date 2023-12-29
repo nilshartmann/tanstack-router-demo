@@ -1,4 +1,3 @@
-import { recipeRoute } from "../../../App.tsx";
 import {
   useGetRecipeFeedbacksQuery,
   useGetRecipeQuery,
@@ -7,6 +6,7 @@ import { RatingStars } from "../../../components/RatingStars.tsx";
 import { Fragment } from "react";
 import { formatMinuteDuration } from "../../../components/FormatMinuteDuration.tsx";
 import { Link } from "@tanstack/react-router";
+import { recipeRoute } from "../../../router-config.tsx";
 
 export default function RecipePage() {
   const { recipeId } = recipeRoute.useParams();
