@@ -37,18 +37,14 @@ export default function LandingPage() {
           </p>
         </div>
         <div className="mt-10 flex justify-center">
-          <AppLink variant="button" to={"/recipes"} size={"lg"}>
+          <AppLink to={"/recipes"} size={"lg"}>
             Let me in - I'm hungry! 😋
           </AppLink>
         </div>
         <div className={"mt-10 flex justify-center space-x-8"}>
-          <AppLink variant={"button"} to={"/about"}>
-            About us
-          </AppLink>
+          <AppLink to={"/about"}>About us</AppLink>
 
-          <AppLink variant={"button"} to={"/privacy"}>
-            Privacy
-          </AppLink>
+          <AppLink to={"/privacy"}>Privacy</AppLink>
         </div>
       </div>
     </main>
