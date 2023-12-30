@@ -61,7 +61,7 @@ const landingPageRoute = new Route({
 
 const recipesLayoutRoute = new Route({
   getParentRoute() {
-    return rootRoute;
+    return staticPageLayoutRoute;
   },
   path: "recipes",
   component: RecipesLayoutRoute,
@@ -111,11 +111,14 @@ export const shoppingListRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   landingPageRoute,
-  staticPageLayoutRoute.addChildren([aboutRoute, privacyRoute]),
-  recipesLayoutRoute.addChildren([
-    recipeListRoute,
-    recipeRoute,
-    shoppingListRoute,
+  staticPageLayoutRoute.addChildren([
+    aboutRoute,
+    privacyRoute,
+    recipesLayoutRoute.addChildren([
+      recipeListRoute,
+      recipeRoute,
+      shoppingListRoute,
+    ]),
   ]),
 ]);
 

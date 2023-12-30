@@ -1,8 +1,9 @@
 import { Link, Outlet } from "@tanstack/react-router";
+import Footer from "../components/layout/Footer.tsx";
 
 export default function StaticLayoutRoute() {
   return (
-    <>
+    <div className={"flex min-h-screen flex-col"}>
       <div className={"container mx-auto h-12"}>
         <div className={"flex h-full items-center justify-between"}>
           <nav className={"space-x-3"}>
@@ -37,6 +38,7 @@ export default function StaticLayoutRoute() {
         </div>
       </div>
       <Outlet />
-    </>
+      <Footer />
+    </div>
   );
 }
