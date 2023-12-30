@@ -1,11 +1,10 @@
 import { useGetAllRecipesQuery } from "../../components/use-queries.ts";
-import { H1 } from "../../components/Heading.tsx";
-import { formatMinuteDuration } from "../../components/FormatMinuteDuration.tsx";
 import clsx from "clsx";
 import ButtonBar from "../../components/ButtonBar.tsx";
-import { Link } from "@tanstack/react-router";
-import { RatingStars } from "../../components/RatingStars.tsx";
-import { recipeListRoute } from "../../router-config.tsx";
+import { Link, MatchRoute } from "@tanstack/react-router";
+import { recipeListRoute, recipeRoute } from "../../router-config.tsx";
+import { RecipeCard } from "../../components/material/RecipeCard.tsx";
+import { LoadingRecipeCard } from "../../components/material/LoadingRecipeCard.tsx";
 
 type CheckButtonProps = {
   checked: boolean;
@@ -140,69 +139,29 @@ export default function RecipeListPage() {
             </CheckButton>
           </ButtonBar>
         </div>
+
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {result.data.content.map((recipe) => {
             return (
               <div
                 key={recipe.id}
                 className={
-                  "rounded border border-gray-200 bg-white p-4 shadow-lg hover:drop-shadow-lg "
+                  "h-full rounded border border-gray-200 bg-white p-4 shadow-lg hover:drop-shadow-lg "
                 }
               >
-                <div className={"flex h-full flex-col justify-between"}>
-                  <div>
-                    <img
-                      className="mb-2 h-48 w-full rounded object-cover"
-                      src={`/images/recipes/food_${recipe.id}.png`}
-                      alt="image1"
-                    />
-                    <div className={"mt-8 flex justify-between"}>
-                      <p
-                        className={
-                          "font-space text-sm font-medium uppercase tracking-[2px] text-red"
-                        }
-                      >
-                        {recipe.mealType}
-                      </p>
-                    </div>
-                    <H1 className={"mb-4 mt-4 font-space font-bold"}>
-                      <Link
-                        // from={"/recipes"}
-                        to={String(recipe.id)}
-                        className={"hover:text-orange_2 hover:underline"}
-                      >
-                        {recipe.title}
-                      </Link>
-                    </H1>
-                    <p className={"text mt-2 font-inter text-gray-500"}>
-                      {recipe.headline}
-                    </p>
-                    <div className={"mt-4 space-x-1 text-orange_2"}>
-                      <RatingStars rating={recipe.averageRating} />
-                    </div>
-                  </div>
-                  <div className={"mt-4 flex"}>
-                    <div className={"mt-4 space-y-2"}>
-                      <p className="me-2 inline-block rounded border border-green bg-white p-2 text-[15px] text-green">
-                        <i className="fa-regular fa-clock mr-2"></i>
-                        {formatMinuteDuration(
-                          recipe.cookTime + recipe.preparationTime,
-                        )}
-                      </p>
-                      {recipe.categories.map((c) => (
-                        <p
-                          key={c.description + "_" + c.title}
-                          className={
-                            "me-2 inline-block rounded border border-green bg-white p-2 text-[15px] text-green"
-                          }
-                        >
-                          <i className={c.icon} />
-                          <span className={"ms-2"}>{c.title}</span>
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <MatchRoute
+                  to={recipeRoute.to}
+                  params={{ recipeId: recipe.id }}
+                  pending
+                >
+                  {(match) =>
+                    match ? (
+                      <LoadingRecipeCard />
+                    ) : (
+                      <RecipeCard recipe={recipe} />
+                    )
+                  }
+                </MatchRoute>
               </div>
             );
           })}

@@ -1,9 +1,10 @@
-import { useGetRecipeFeedbacksQuery } from "../../../components/use-queries.ts";
 import { RatingStars } from "../../../components/RatingStars.tsx";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { formatMinuteDuration } from "../../../components/FormatMinuteDuration.tsx";
 import { Link } from "@tanstack/react-router";
 import { recipeRoute } from "../../../router-config.tsx";
+import FeedbackList from "../../../components/material/FeedbackList.tsx";
+import LoadingIndicator from "../../../components/LoadingIndicator.tsx";
 
 export default function RecipePage() {
   // const { recipeId } = recipeRoute.useParams();
@@ -12,10 +13,6 @@ export default function RecipePage() {
   // } = useGetRecipeQuery(parseInt(recipeId));
 
   const { recipe } = recipeRoute.useLoaderData();
-
-  const {
-    data: { feedbacks = [] },
-  } = useGetRecipeFeedbacksQuery(recipe.id);
 
   return (
     <div className={"mb-20"}>
@@ -102,6 +99,15 @@ export default function RecipePage() {
               </Fragment>
             ))}
           </div>
+
+          <h2 className={"mb-12 mt-12  font-space text-3xl font-bold"}>
+            Ratings
+          </h2>
+          <Suspense
+            fallback={<LoadingIndicator>Loading Ratings...</LoadingIndicator>}
+          >
+            <FeedbackList recipeId={recipe.id} />
+          </Suspense>
         </div>
         <div className={"w-1/3"}>
           <div className={"border-1 w-full rounded-2xl bg-goldgray p-8"}>
@@ -172,46 +178,8 @@ export default function RecipePage() {
               </span>
             </div>
           </div>
-
-          <div className={"border-1 mt-8 w-full rounded-2xl bg-goldgray p-8"}>
-            <h2 className={"mb-8 mt-4 ps-4 font-space text-3xl font-bold"}>
-              Ratings
-            </h2>
-
-            {feedbacks.map((f) => {
-              return (
-                <div
-                  key={f.id}
-                  className={
-                    "mb-8 border-b border-dotted border-gray-300 pb-8 ps-4"
-                  }
-                >
-                  <span className={"font-inter text-gray-500"}>
-                    <div className={"flex items-end justify-between"}>
-                      <div className={"font-medium"}>{f.commenter} </div>
-                      <div className={"text-sm"}>{formatDate(f.createdAt)}</div>
-                    </div>
-                    <div className={"mt-1 text-orange_2"}>
-                      <RatingStars rating={f.rating} />
-                    </div>
-                    <div className={"mt-4"}>{f.comment}</div>
-                  </span>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
     </div>
   );
-}
-
-function formatDate(s: string) {
-  const date = new Date(s);
-  const userLocale = navigator.language;
-  return new Intl.DateTimeFormat(userLocale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
 }

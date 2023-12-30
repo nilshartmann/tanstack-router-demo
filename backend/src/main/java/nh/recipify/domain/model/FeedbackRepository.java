@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface FeedbackRepository extends Repository<Feedback, Long> {
 
-    public List<Feedback> getFeedbacksByRecipeIdOrderByCreatedAt(Long recipeId);
+    List<Feedback> getFeedbacksByRecipeIdOrderByCreatedAtDesc(Long recipeId);
 
 }

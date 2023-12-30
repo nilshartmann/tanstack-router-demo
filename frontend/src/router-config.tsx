@@ -88,8 +88,10 @@ export const recipeRoute = new Route({
   getParentRoute() {
     return recipesLayoutRoute;
   },
+
+  // pendingComponent: () => <GlobalLoadingIndicator />,
+
   loader: ({ params }) => {
-    console.log("LOADING RECIPE DATA", params.recipeId);
     return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
       path: {
         recipeId: params.recipeId,
