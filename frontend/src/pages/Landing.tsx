@@ -1,5 +1,6 @@
 import { H1 } from "../components/Heading.tsx";
-import AppLink from "../components/AppLink.tsx";
+import { Button } from "../components/Button.tsx";
+import { Link } from "@tanstack/react-router";
 
 export default function LandingPage() {
   return (
@@ -37,14 +38,17 @@ export default function LandingPage() {
           </p>
         </div>
         <div className="mt-10 flex justify-center">
-          <AppLink to={"/recipes"} size={"lg"}>
-            Let me in - I'm hungry! 😋
-          </AppLink>
+          <Button size={"lg"}>
+            <Link to={"/recipes"}>Let me in - I'm hungry! 😋</Link>
+          </Button>
         </div>
         <div className={"mt-10 flex justify-center space-x-8"}>
-          <AppLink to={"/about"}>About us</AppLink>
-
-          <AppLink to={"/privacy"}>Privacy</AppLink>
+          <Button>
+            <Link to={"/about"}>About us</Link>
+          </Button>
+          <Button>
+            <Link to={"/privacy"}>Privacy</Link>
+          </Button>
         </div>
       </div>
     </main>

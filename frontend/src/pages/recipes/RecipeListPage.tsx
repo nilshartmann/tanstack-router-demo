@@ -5,33 +5,21 @@ import { Link, MatchRoute } from "@tanstack/react-router";
 import { recipeListRoute, recipeRoute } from "../../router-config.tsx";
 import { RecipeCard } from "../../components/material/RecipeCard.tsx";
 import { LoadingRecipeCard } from "../../components/material/LoadingRecipeCard.tsx";
+import { Button, CheckLabel } from "../../components/Button.tsx";
 
 type CheckButtonProps = {
   checked: boolean;
   children: React.ReactNode;
   orderBy?: "time" | "rating" | undefined;
-  onClick?: () => void;
 };
 
 export function CheckButton({ checked, children, orderBy }: CheckButtonProps) {
-  const buttonClassName = clsx(
-    "inline-flex  items-center justify-center rounded px-4 py-2 font-barlow text-white",
-    checked || "bg-orange_2 hover:bg-orange_2-500 ",
-    checked && "bg-green hover:bg-green ",
-  );
-
-  const iconClassName = clsx(
-    "fa-regular",
-    checked ? "fa-circle-check text-white" : "fa-circle text-gray-200",
-  );
   return (
-    <Link
-      className={buttonClassName}
-      search={(s) => ({ ...s, orderBy: orderBy })}
-    >
-      <i className={iconClassName}></i>
-      <span className={"ms-2 hover:underline"}>{children}</span>
-    </Link>
+    <Button checked={checked}>
+      <Link search={(s) => ({ ...s, orderBy: orderBy })}>
+        <CheckLabel checked={checked}>{children}</CheckLabel>
+      </Link>
+    </Button>
   );
 }
 
