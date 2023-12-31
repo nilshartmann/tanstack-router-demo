@@ -69,7 +69,7 @@ const recipesLayoutRoute = new Route({
 });
 
 const RecipePageListParams = z.object({
-  page: z.number().optional(),
+  page: z.number().min(0).optional(),
   orderBy: z.enum(["time", "rating"]).optional(),
 });
 type TRecipePageListParams = z.infer<typeof RecipePageListParams>;
@@ -79,8 +79,9 @@ export const recipeListRoute = new Route({
   getParentRoute() {
     return recipesLayoutRoute;
   },
-  validateSearch: (search: Record<string, unknown>): TRecipePageListParams =>
+  validateSearch: (search): TRecipePageListParams =>
     RecipePageListParams.parse(search),
+  errorComponent: (p) => <h1>Error! {p.error!.toString()}</h1>,
   component: RecipeListPage,
 });
 
