@@ -1,12 +1,12 @@
 import { RatingStars } from "../../../components/RatingStars.tsx";
 import { Fragment, Suspense } from "react";
 import { formatMinuteDuration } from "../../../components/FormatMinuteDuration.tsx";
-import { Link } from "@tanstack/react-router";
+import { Await, Link } from "@tanstack/react-router";
 import { recipeRoute } from "../../../router-config.tsx";
-import FeedbackList from "../../../components/material/FeedbackList.tsx";
 import LoadingIndicator from "../../../components/LoadingIndicator.tsx";
 import { NavButtonBar } from "../../../components/NavButtonBar.tsx";
 import { Button } from "../../../components/Button.tsx";
+import FeedbackList from "../../../components/material/FeedbackList.tsx";
 
 export default function RecipePage() {
   // const { recipeId } = recipeRoute.useParams();
@@ -14,7 +14,7 @@ export default function RecipePage() {
   //   data: { recipe },
   // } = useGetRecipeQuery(parseInt(recipeId));
 
-  const { recipe } = recipeRoute.useLoaderData();
+  const { recipe, feedbacksPromise } = recipeRoute.useLoaderData();
 
   return (
     <div className={"mb-20"}>
@@ -115,7 +115,10 @@ export default function RecipePage() {
           <Suspense
             fallback={<LoadingIndicator>Loading Ratings...</LoadingIndicator>}
           >
-            <FeedbackList recipeId={recipe.id} />
+            <Await promise={feedbacksPromise}>
+              {(feedbacks) => <FeedbackList feedbacks={feedbacks} />}
+            </Await>
+            {/*<FeedbackListLoader recipeId={recipe.id} />*/}
           </Suspense>
         </div>
         <div className={"w-1/3"}>

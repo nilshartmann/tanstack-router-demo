@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import {
+  defer,
   NotFoundRoute,
   Outlet,
   RootRoute,
@@ -16,10 +17,7 @@ import ShopingListPage from "./pages/recipes/$recipeId/shoppinglist/ShoppingList
 import About from "./pages/About.tsx";
 import { Privacy } from "./pages/Privacy.tsx";
 import StaticLayoutRoute from "./pages/StaticLayoutRoute.tsx";
-import {
-  fetchFromApi,
-  getEndpointConfig,
-} from "./components/fetch-from-api.ts";
+import { fetchFeedbacks, fetchRecipe } from "./components/material/fetchers.ts";
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -81,7 +79,6 @@ export const recipeListRoute = new Route({
   },
   validateSearch: (search): TRecipePageListParams =>
     RecipePageListParams.parse(search),
-  errorComponent: (p) => <h1>Error! {p.error!.toString()}</h1>,
   component: RecipeListPage,
 });
 
@@ -91,14 +88,13 @@ export const recipeRoute = new Route({
     return recipesLayoutRoute;
   },
 
-  // pendingComponent: () => <GlobalLoadingIndicator />,
-
-  loader: ({ params }) => {
-    return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
-      path: {
-        recipeId: params.recipeId,
-      },
-    });
+  loader: async ({ params }) => {
+    const feedbacksPromise = defer(fetchFeedbacks(params.recipeId));
+    const recipe = await fetchRecipe(params.recipeId);
+    return {
+      recipe,
+      feedbacksPromise,
+    };
   },
   component: RecipePage,
 });

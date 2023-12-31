@@ -1,15 +1,11 @@
 import { formatDate } from "../format-date.ts";
 import { RatingStars } from "../RatingStars.tsx";
-import { useGetRecipeFeedbacksQuery } from "../use-queries.ts";
+import { Feedback } from "../api-types.ts";
 
 type FeedbackListProps = {
-  recipeId: string;
+  feedbacks: Feedback[];
 };
-export default function FeedbackList({ recipeId }: FeedbackListProps) {
-  const {
-    data: { feedbacks = [] },
-  } = useGetRecipeFeedbacksQuery(recipeId);
-
+export default function FeedbackList({ feedbacks }: FeedbackListProps) {
   return (
     <>
       {feedbacks.map((f) => {
