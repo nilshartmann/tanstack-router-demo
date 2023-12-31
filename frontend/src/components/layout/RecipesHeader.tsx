@@ -1,7 +1,6 @@
 import { H1 } from "../Heading.tsx";
 
 import { Link } from "@tanstack/react-router";
-import RecipesNav from "./RecipesNav.tsx";
 
 export default function RecipesHeader() {
   return (
@@ -23,7 +22,6 @@ export default function RecipesHeader() {
                 Recipify
               </Link>
             </H1>
-            <RecipesNav />
           </div>
         </div>
       </header>
