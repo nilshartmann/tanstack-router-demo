@@ -1,6 +1,6 @@
 import { H1 } from "../Heading";
 
-export default function PrivacyContent() {
+export default function PrivacyPageContent() {
   return (
     <>
       <H1>Privacy Policy</H1>

@@ -9,14 +9,14 @@ import {
   Router,
 } from "@tanstack/react-router";
 import Landing from "./pages/Landing.tsx";
-import RecipesLayoutRoute from "./pages/recipes/RecipesLayoutRoute.tsx";
+import RecipesLayout from "./pages/recipes/RecipesLayout.tsx";
 import z from "zod";
 import RecipeListPage from "./pages/recipes/RecipeListPage.tsx";
 import RecipePage from "./pages/recipes/$recipeId/RecipePage.tsx";
 import ShopingListPage from "./pages/recipes/$recipeId/shoppinglist/ShoppingListPage.tsx";
-import About from "./pages/About.tsx";
-import { Privacy } from "./pages/Privacy.tsx";
-import StaticLayoutRoute from "./pages/StaticLayoutRoute.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
+import { PrivacyPage } from "./pages/PrivacyPage.tsx";
+import DefaultPageLayout from "./pages/DefaultPageLayout.tsx";
 import { fetchFeedbacks, fetchRecipe } from "./components/material/fetchers.ts";
 
 const rootRoute = new RootRoute({
@@ -32,19 +32,19 @@ const rootRoute = new RootRoute({
 const staticPageLayoutRoute = new Route({
   id: "staticpages",
   getParentRoute: () => rootRoute,
-  component: StaticLayoutRoute,
+  component: DefaultPageLayout,
 });
 
 const aboutRoute = new Route({
   path: "about",
   getParentRoute: () => staticPageLayoutRoute,
-  component: About,
+  component: AboutPage,
 });
 
 const privacyRoute = new Route({
   path: "privacy",
   getParentRoute: () => staticPageLayoutRoute,
-  component: Privacy,
+  component: PrivacyPage,
 });
 
 const notFoundRoute = new NotFoundRoute({
@@ -63,7 +63,7 @@ const recipesLayoutRoute = new Route({
     return staticPageLayoutRoute;
   },
   path: "recipes",
-  component: RecipesLayoutRoute,
+  component: RecipesLayout,
 });
 
 const RecipePageListParams = z.object({

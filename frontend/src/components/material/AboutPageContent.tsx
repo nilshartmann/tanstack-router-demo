@@ -1,6 +1,6 @@
 import { H1 } from "../Heading.tsx";
 
-export default function AboutContent() {
+export default function AboutPageContent() {
   return (
     <>
       <H1>About Recipify</H1>

@@ -1,7 +1,7 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import Footer from "../components/layout/Footer.tsx";
 
-export default function StaticLayoutRoute() {
+export default function DefaultPageLayout() {
   return (
     <div className={"flex min-h-screen flex-col"}>
       <div className={"container mx-auto h-12"}>
