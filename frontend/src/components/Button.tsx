@@ -50,3 +50,22 @@ export function CheckLabel({ children, checked }: CheckLabelProps) {
     </>
   );
 }
+
+type PageButtonState = {
+  state: "active" | "disabled" | "selectable";
+  label: string;
+};
+
+type PageButtonProps = {
+  state: PageButtonState;
+};
+export function PageButton({ state: { state, label } }: PageButtonProps) {
+  const buttonClassName = twMerge(
+    "inline-flex h-12 w-12 items-center justify-center rounded px-4 py-2 font-barlow text-white",
+    state === "selectable" &&
+      "bg-orange_2 hover:bg-orange_2-500 hover:underline",
+    state === "active" && "bg-green underline hover:bg-green",
+    state === "disabled" && "bg-gray-300",
+  );
+  return <span className={buttonClassName}>{label}</span>;
+}
