@@ -6,6 +6,7 @@ import { RecipeCard } from "../../components/material/RecipeCard.tsx";
 import { LoadingRecipeCard } from "../../components/material/LoadingRecipeCard.tsx";
 import { Button, CheckLabel, PageButton } from "../../components/Button.tsx";
 import PaginationBar from "../../components/PaginationBar.tsx";
+import { NavButtonBar } from "../../components/NavButtonBar.tsx";
 
 type CheckButtonProps = {
   checked: boolean;
@@ -30,7 +31,7 @@ export default function RecipeListPage() {
   return (
     <div className={"bg-goldgray"}>
       <div className={"container mx-auto pb-16 pt-16"}>
-        <div className={"flex justify-end"}>
+        <NavButtonBar>
           <ButtonBar>
             <CheckButton orderBy={undefined} checked={orderBy === undefined}>
               Show newest first
@@ -42,7 +43,7 @@ export default function RecipeListPage() {
               Order by time
             </CheckButton>
           </ButtonBar>
-        </div>
+        </NavButtonBar>
 
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {result.data.content.map((recipe) => {

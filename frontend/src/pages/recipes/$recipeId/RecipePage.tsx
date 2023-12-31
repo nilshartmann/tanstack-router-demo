@@ -5,6 +5,8 @@ import { Link } from "@tanstack/react-router";
 import { recipeRoute } from "../../../router-config.tsx";
 import FeedbackList from "../../../components/material/FeedbackList.tsx";
 import LoadingIndicator from "../../../components/LoadingIndicator.tsx";
+import { NavButtonBar } from "../../../components/NavButtonBar.tsx";
+import { Button } from "../../../components/Button.tsx";
 
 export default function RecipePage() {
   // const { recipeId } = recipeRoute.useParams();
@@ -16,7 +18,14 @@ export default function RecipePage() {
 
   return (
     <div className={"mb-20"}>
-      <div className="mt-8  bg-goldgray pb-12 pe-8 ps-8 pt-12 ">
+      <div className={"container mx-auto mt-4"}>
+        <NavButtonBar align={"left"}>
+          <Button>
+            <Link to={"/recipes"}>Back to recipes</Link>
+          </Button>
+        </NavButtonBar>
+      </div>
+      <div className="mt-4  bg-goldgray pb-12 pe-8 ps-8 pt-12 ">
         <div
           className={"container mx-auto flex flex-col sm:flex-row sm:space-x-8"}
         >
@@ -64,7 +73,7 @@ export default function RecipePage() {
           </div>
           <div className={"sm:w-1/2"}>
             <img
-              className="mt-2 w-full rounded object-cover sm:mt-4"
+              className="mt-2 w-full rounded object-cover sm:mt-4 sm:max-h-80"
               src={`/images/recipes/food_${recipe.id}.png`}
               alt={recipe.title}
             />

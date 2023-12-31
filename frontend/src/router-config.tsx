@@ -24,6 +24,7 @@ import {
 const rootRoute = new RootRoute({
   component: () => (
     <>
+      {/*<ScrollRestoration />*/}
       <Outlet />
       {/*<TanStackRouterDevtools />*/}
     </>
