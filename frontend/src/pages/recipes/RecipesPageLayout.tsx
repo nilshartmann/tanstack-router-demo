@@ -3,7 +3,7 @@ import RecipesHeader from "../../components/layout/RecipesHeader.tsx";
 import { Suspense } from "react";
 import { GlobalLoadingIndicator } from "../../components/material/GlobalLoadingIndicator.tsx";
 
-export default function RecipesLayout() {
+export default function RecipesPageLayout() {
   return (
     <>
       <RecipesHeader />

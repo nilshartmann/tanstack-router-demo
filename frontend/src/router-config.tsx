@@ -8,8 +8,7 @@ import {
   Route,
   Router,
 } from "@tanstack/react-router";
-import Landing from "./pages/Landing.tsx";
-import RecipesLayout from "./pages/recipes/RecipesLayout.tsx";
+import RecipesPageLayout from "./pages/recipes/RecipesPageLayout.tsx";
 import z from "zod";
 import RecipeListPage from "./pages/recipes/RecipeListPage.tsx";
 import RecipePage from "./pages/recipes/$recipeId/RecipePage.tsx";
@@ -18,6 +17,7 @@ import AboutPage from "./pages/AboutPage.tsx";
 import { PrivacyPage } from "./pages/PrivacyPage.tsx";
 import DefaultPageLayout from "./pages/DefaultPageLayout.tsx";
 import { fetchFeedbacks, fetchRecipe } from "./components/material/fetchers.ts";
+import LandingPage from "./pages/LandingPage.tsx";
 
 const rootRoute = new RootRoute({
   component: () => (
@@ -55,7 +55,7 @@ const notFoundRoute = new NotFoundRoute({
 const landingPageRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Landing,
+  component: LandingPage,
 });
 
 const recipesLayoutRoute = new Route({
@@ -63,7 +63,7 @@ const recipesLayoutRoute = new Route({
     return staticPageLayoutRoute;
   },
   path: "recipes",
-  component: RecipesLayout,
+  component: RecipesPageLayout,
 });
 
 const RecipePageListParams = z.object({
