@@ -27,9 +27,12 @@ public class RecipeController {
     private final RecipeRepository recipeRepository;
     private final FeedbackRepository feedbackRepository;
 
-    public static long slowDown_GetRecipeList = 2400;
-    public static long slowDown_GetRecipe = 2400;
-    public static long slowDown_GetFeedbacks = 1600;
+    // ------------------------------------------------------------------------
+    // -- Use for demo to simulate slowness of our backend
+    // ------------------------------------------------------------------------
+    public static long slowDown_GetRecipeList = 0;
+    public static long slowDown_GetRecipe = 0;
+    public static long slowDown_GetFeedbacks = 0;
 
     public RecipeController(RecipeRepository recipeRepository, FeedbackRepository feedbackRepository) {
         this.recipeRepository = recipeRepository;
@@ -57,7 +60,7 @@ public class RecipeController {
                 return Sort.by("averageRating").descending().and(Sort.by("title"));
             }).orElse(Sort.by("createdAt").descending()));
 
-        Page<Recipe> result = recipeRepository.findAllBy(pageable);
+        Page<Recipe> result = recipeRepository.findAllByIdLessThan(pageable, 20);
         var newPage = result.map(RecipeDto::forRecipe);
         return PageResponse.of(newPage);
     }

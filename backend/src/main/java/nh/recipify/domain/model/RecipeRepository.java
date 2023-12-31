@@ -13,6 +13,8 @@ public interface RecipeRepository extends Repository<Recipe, Long> {
 
     Page<Recipe> findAllBy(Pageable p);
 
+    Page<Recipe> findAllByIdLessThan(Pageable p, long id);
+
     Optional<Recipe> findById(Long id);
 
 }
