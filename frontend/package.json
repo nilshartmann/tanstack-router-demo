@@ -24,6 +24,7 @@
     "date-fns": "^3.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

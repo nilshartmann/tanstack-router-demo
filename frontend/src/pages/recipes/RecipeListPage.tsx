@@ -16,7 +16,7 @@ type CheckButtonProps = {
 export function CheckButton({ checked, children, orderBy }: CheckButtonProps) {
   return (
     <Button checked={checked}>
-      <Link search={(s) => ({ ...s, orderBy: orderBy })}>
+      <Link search={(s) => ({ ...s, orderBy: orderBy })} disabled={checked}>
         <CheckLabel checked={checked}>{children}</CheckLabel>
       </Link>
     </Button>
