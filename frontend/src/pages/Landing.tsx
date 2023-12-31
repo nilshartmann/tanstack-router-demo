@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 export default function LandingPage() {
   return (
     <main
-      className={"min-w-screen h-svh bg-cover"}
+      className={"min-w-screen min-h-svh bg-cover"}
       style={{
         backgroundImage:
           "radial-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)), url('/images/landing-page.png')",
