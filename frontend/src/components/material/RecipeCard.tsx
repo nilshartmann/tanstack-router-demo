@@ -33,6 +33,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         </div>
         <H1 className={"mb-4 mt-4 font-space font-bold"}>
           <Link
+            preload={"intent"}
             to={recipeRoute.to}
             params={{ recipeId: recipe.id }}
             className={"hover:text-orange_2 hover:underline hover:underline"}
