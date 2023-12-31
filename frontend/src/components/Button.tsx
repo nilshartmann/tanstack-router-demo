@@ -34,7 +34,7 @@ export function CheckLabel({ children, checked }: CheckLabelProps) {
   const iconClassName = twMerge(
     "fa-regular",
     checked
-      ? "fa-circle-check text-white underline-none hover:no-underline cursor-default no-underline"
+      ? "fa-circle-check underline-none cursor-default text-white no-underline hover:no-underline"
       : "fa-circle text-gray-200",
   );
 

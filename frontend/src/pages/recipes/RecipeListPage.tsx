@@ -1,11 +1,11 @@
 import { useGetAllRecipesQuery } from "../../components/use-queries.ts";
-import clsx from "clsx";
 import ButtonBar from "../../components/ButtonBar.tsx";
 import { Link, MatchRoute } from "@tanstack/react-router";
 import { recipeListRoute, recipeRoute } from "../../router-config.tsx";
 import { RecipeCard } from "../../components/material/RecipeCard.tsx";
 import { LoadingRecipeCard } from "../../components/material/LoadingRecipeCard.tsx";
 import { Button, CheckLabel } from "../../components/Button.tsx";
+import { twMerge } from "tailwind-merge";
 
 type CheckButtonProps = {
   checked: boolean;
@@ -86,7 +86,7 @@ type PageButtonProps = {
   targetPage: number;
 };
 export function PageButton({ children, state, targetPage }: PageButtonProps) {
-  const buttonClassName = clsx(
+  const buttonClassName = twMerge(
     "inline-flex h-12 w-12 items-center justify-center rounded px-4 py-2 font-barlow text-white",
     state === "selectable" &&
       "bg-orange_2 hover:bg-orange_2-500 hover:underline",

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 type HeadingProps = {
   children: ReactNode;
@@ -8,7 +8,7 @@ type HeadingProps = {
 
 export function H1({ children, className }: HeadingProps) {
   return (
-    <h1 className={clsx("font-space text-3xl font-bold", className)}>
+    <h1 className={twMerge("font-space text-3xl font-bold", className)}>
       {children}
     </h1>
   );
