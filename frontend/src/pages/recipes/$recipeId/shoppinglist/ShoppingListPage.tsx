@@ -1,6 +1,6 @@
 import { useGetRecipeQuery } from "../../../../components/use-queries.ts";
 import { Link } from "@tanstack/react-router";
-import { shoppingListRoute } from "../../../../router-config.tsx";
+import { recipeRoute, shoppingListRoute } from "../../../../router-config.tsx";
 
 export default function ShoppingListPage() {
   const { recipeId } = shoppingListRoute.useParams();
@@ -16,7 +16,7 @@ export default function ShoppingListPage() {
       </h2>
 
       <h1 className={"mb-8 mt-4 font-space text-5xl font-bold hover:underline"}>
-        <Link to={`/recipes/$recipeId`}>{recipe.title}</Link>
+        <Link to={recipeRoute.to}>{recipe.title}</Link>
       </h1>
 
       {recipe.ingredients.map((i) => {
