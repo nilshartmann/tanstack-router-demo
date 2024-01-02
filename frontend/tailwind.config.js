@@ -26,6 +26,7 @@ export default {
       },
       green: {
         DEFAULT: "#6FB43F",
+        200: "#9ccf77",
       },
       goldgray: {
         DEFAULT: "#F4F3F0",

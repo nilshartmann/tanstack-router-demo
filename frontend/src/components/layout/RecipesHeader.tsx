@@ -1,8 +1,13 @@
 import { H1 } from "../Heading.tsx";
 
 import { Link } from "@tanstack/react-router";
+import { ReactNode } from "react";
 
-export default function RecipesHeader() {
+type RecipesHeaderProps = {
+  children?: ReactNode;
+};
+
+export default function RecipesHeader({ children }: RecipesHeaderProps) {
   return (
     <>
       <header
@@ -22,6 +27,7 @@ export default function RecipesHeader() {
                 Recipify
               </Link>
             </H1>
+            {children}
           </div>
         </div>
       </header>

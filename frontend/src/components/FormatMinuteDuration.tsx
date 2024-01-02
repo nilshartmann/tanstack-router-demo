@@ -6,3 +6,10 @@ export function formatMinuteDuration(durationInMin: number) {
 
   return formatDuration({ hours: hours, minutes: minutes });
 }
+
+export function formatMinSeconds(time: number) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`; // ensure two-digit seconds
+}

@@ -1,12 +1,18 @@
 import { twMerge } from "tailwind-merge";
 
 type ButtonProps = {
-  size?: "sm" | "regular" | "lg";
+  size?: "regular" | "lg";
   checked?: boolean;
   children: React.ReactNode;
+  disabled?: boolean;
 };
 
-export function Button({ size = "regular", checked, children }: ButtonProps) {
+export function Button({
+  size = "regular",
+  checked,
+  children,
+  disabled,
+}: ButtonProps) {
   return (
     <span
       className={twMerge(
@@ -18,6 +24,8 @@ export function Button({ size = "regular", checked, children }: ButtonProps) {
         size === "regular" &&
           checked &&
           "bg-green hover:cursor-default hover:bg-green hover:no-underline",
+        disabled &&
+          "cursor-default cursor-default bg-orange_2-200 hover:cursor-default hover:bg-orange_2-200",
       )}
     >
       {children}
