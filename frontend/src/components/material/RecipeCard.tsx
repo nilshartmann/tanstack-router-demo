@@ -4,12 +4,21 @@ import { Link } from "@tanstack/react-router";
 import { RatingStars } from "../RatingStars.tsx";
 import { formatMinuteDuration } from "../FormatMinuteDuration.tsx";
 import { recipeRoute } from "../../router-config.tsx";
+import { memo } from "react";
+import { BookmarkButton } from "./BookmarkButton.tsx";
 
 type RecipeCardProps = {
   recipe: RecipeDto;
 };
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
+// Note that this RecipeCard components is marked as re-rendered
+// in the devtools, even it is not (https://github.com/facebook/react/issues/19778)
+// as a workaround:
+//  - use profile to see that it is (not) rerendered
+//  - use console.log
+
+const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
+  console.log("Render RecipeCard", recipe.id);
   return (
     <div className={"flex flex-col justify-between"}>
       <div>
@@ -20,6 +29,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               src={`/images/recipes/food_${recipe.id}.png`}
               alt="image1"
             />
+            <BookmarkButton recipeId={recipe.id} />
           </div>
         </Link>
         <div className={"mt-8 flex justify-between"}>
@@ -36,7 +46,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             preload={"intent"}
             to={recipeRoute.to}
             params={{ recipeId: recipe.id }}
-            className={"hover:text-orange_2 hover:underline hover:underline"}
+            className={"hover:text-orange_2 hover:underline"}
           >
             {recipe.title}
           </Link>
@@ -69,4 +79,6 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
       </div>
     </div>
   );
-}
+});
+
+export { RecipeCard };

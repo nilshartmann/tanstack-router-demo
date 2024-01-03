@@ -69,6 +69,7 @@ const recipesLayoutRoute = new Route({
 const RecipePageListParams = z.object({
   page: z.number().min(0).optional(),
   orderBy: z.enum(["time", "rating"]).optional(),
+  bookmarkedRecipeIds: z.string().array().optional(),
 });
 type TRecipePageListParams = z.infer<typeof RecipePageListParams>;
 

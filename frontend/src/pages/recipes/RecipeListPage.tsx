@@ -25,7 +25,13 @@ export function CheckButton({ checked, children, orderBy }: CheckButtonProps) {
 }
 
 export default function RecipeListPage() {
-  const { page = 0, orderBy } = recipeListRoute.useSearch();
+  const { page, orderBy } = recipeListRoute.useSearch({
+    select: (s) => ({
+      page: s.page || 0,
+      orderBy: s.orderBy,
+    }),
+  });
+  console.log("Rendering RecipeListPage with search Params", page, orderBy);
   const result = useGetAllRecipesQuery(page, orderBy);
 
   return (
@@ -59,13 +65,14 @@ export default function RecipeListPage() {
                   params={{ recipeId: recipe.id }}
                   pending
                 >
-                  {(match) =>
-                    match ? (
+                  {(match) => {
+                    console.log("Match Route", recipe.id, match);
+                    return match ? (
                       <LoadingRecipeCard />
                     ) : (
                       <RecipeCard recipe={recipe} />
-                    )
-                  }
+                    );
+                  }}
                 </MatchRoute>
               </div>
             );
