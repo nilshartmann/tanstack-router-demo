@@ -9,7 +9,7 @@ export function RecipeRatings() {
 
   return (
     <>
-      <h2 className={"mb-12 mt-12  font-space text-3xl font-bold"}>Ratings</h2>
+      <h2 className={"mb-4 font-space text-3xl font-bold"}>Ratings</h2>
       <Suspense
         fallback={<LoadingIndicator>Loading Ratings...</LoadingIndicator>}
       >

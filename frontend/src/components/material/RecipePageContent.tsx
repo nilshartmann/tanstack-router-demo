@@ -6,6 +6,7 @@ import { RatingStars } from "../RatingStars.tsx";
 import { Fragment } from "react";
 import { formatMinuteDuration } from "../FormatMinuteDuration.tsx";
 import { RecipeRatings } from "./RecipeRatings.tsx";
+import { AddFeedbackForm } from "./AddFeedbackForm.tsx";
 
 type RecipePageContentProps = {
   recipe: DetailedRecipeDto;
@@ -76,13 +77,75 @@ export function RecipePageContent({ recipe }: RecipePageContentProps) {
           </div>
         </div>
       </div>
-      <div className={"container mx-auto mt-8 flex space-x-8"}>
+      <div className={"container mx-auto mt-8 flex space-x-12"}>
         <div className={"w-2/3"}>
-          <h2 className={"mb-12 mt-4 font-space text-3xl font-bold"}>
+          <div
+            className={
+              "mt-3 w-full border-b border-dotted border-gray-300 pb-4 pt-4"
+            }
+          >
+            <div className={"mb-4 flex items-center  justify-between "}>
+              <h2 className={"font-space text-3xl font-bold"}>Cooking time</h2>
+              <div className={"flex items-center"}>
+                <i className="fa-regular fa-clock-four me-4 text-3xl text-orange_2 "></i>
+                <div className={"font-inter text-gray-500 "}>
+                  <div className={"font-medium"}>Cooking</div>
+                  <div>{formatMinuteDuration(recipe.cookTime)}</div>
+                </div>
+              </div>
+              <div className={"flex items-center"}>
+                <i className="fa-regular fa-clock-four me-4 text-3xl text-orange_2 "></i>
+                <div className={"font-inter text-gray-500 "}>
+                  <div className={"font-medium"}>Preperation</div>
+                  <div>{formatMinuteDuration(recipe.preparationTime)}</div>
+                </div>
+              </div>
+              <div className={"flex items-center"}>
+                <i className="fa-regular fa-clock-four me-4 text-3xl text-orange_2 "></i>
+                <div className={"font-inter text-gray-500 "}>
+                  <div className={"font-medium"}>Total</div>
+                  <div>
+                    {formatMinuteDuration(
+                      recipe.cookTime + recipe.preparationTime,
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={"mb-8 mt-8 flex items-center justify-between"}>
+            <h2 className={"font-space text-3xl font-bold"}>Ingredients</h2>
+            <div className={"font-inter text-gray-500 hover:text-orange_2 "}>
+              <Link
+                to={"/recipes/$recipeId/shoppinglist"}
+                params={{ recipeId: String(recipe.id) }}
+              >
+                <i className="fa-solid  fa-basket-shopping text-orange_2"></i>{" "}
+                <span className={"underline"}> Shopping list</span>
+              </Link>
+            </div>
+          </div>
+          {recipe.ingredients.map((i) => {
+            return (
+              <div
+                className={
+                  "mb-4 me-4 ms-4 border-b border-dotted border-gray-300 pb-4"
+                }
+                key={i.name}
+              >
+                <i className="fa-regular fa-circle-check me-2 text-orange_2 "></i>
+                <span className={"font-inter text-gray-500 "}>
+                  {i.amount} {i.unit} {i.name}
+                </span>
+              </div>
+            );
+          })}
+          <h2 className={"mb-8 mt-8 font-space text-3xl font-bold"}>
             Instructions
           </h2>
 
-          <div className={"pe-2 ps-2"}>
+          <div className={"me-4 ms-4"}>
             {recipe.instructions.map((i) => (
               <Fragment key={i.orderNo}>
                 <div
@@ -104,77 +167,11 @@ export function RecipePageContent({ recipe }: RecipePageContentProps) {
               </Fragment>
             ))}
           </div>
-
-          <RecipeRatings />
         </div>
         <div className={"w-1/3"}>
           <div className={"border-1 w-full rounded-2xl bg-goldgray p-8"}>
-            <div className={"mb-8 mt-4 flex items-end justify-between ps-4"}>
-              <h2 className={"font-space text-3xl font-bold"}>Ingredients</h2>
-              <div className={"font-inter text-gray-500 "}>
-                <Link
-                  to={"/recipes/$recipeId/shoppinglist"}
-                  params={{ recipeId: String(recipe.id) }}
-                >
-                  <i className="fa-solid  fa-basket-shopping"></i>{" "}
-                  <span className={"underline"}> Shopping list</span>
-                </Link>
-              </div>
-            </div>
-            {recipe.ingredients.map((i) => {
-              return (
-                <div
-                  className={
-                    "mb-4 border-b border-dotted border-gray-300 pb-4 ps-4"
-                  }
-                  key={i.name}
-                >
-                  <i className="fa-regular fa-circle-check me-2 text-orange_2 "></i>
-                  <span className={"font-inter text-gray-500 "}>
-                    {i.amount} {i.unit} {i.name}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-          <div className={"border-1 mt-8 w-full rounded-2xl bg-goldgray p-8"}>
-            <h2 className={"mb-8 mt-4 ps-4 font-space text-3xl font-bold"}>
-              Cooking time
-            </h2>
-
-            <div
-              className={
-                "mb-4 border-b border-dotted border-gray-300 pb-4 ps-4"
-              }
-            >
-              <i className="fa-regular fa-clock-four me-2 text-orange_2 "></i>
-              <span className={"font-inter text-gray-500 "}>
-                Cooking: {formatMinuteDuration(recipe.cookTime)}
-              </span>
-            </div>
-
-            <div
-              className={
-                "mb-4 border-b border-dotted border-gray-300 pb-4 ps-4"
-              }
-            >
-              <i className="fa-regular fa-clock-four me-2 text-orange_2 "></i>
-              <span className={"font-inter text-gray-500 "}>
-                Preparation: {formatMinuteDuration(recipe.preparationTime)}
-              </span>
-            </div>
-
-            <div
-              className={
-                "mb-4 border-b border-dotted border-gray-300 pb-4 ps-4"
-              }
-            >
-              <i className="fa-regular fa-clock-four me-2 text-orange_2 "></i>
-              <span className={"font-inter text-gray-500 "}>
-                Total:{" "}
-                {formatMinuteDuration(recipe.cookTime + recipe.preparationTime)}
-              </span>
-            </div>
+            <RecipeRatings />
+            <AddFeedbackForm recipeId={recipe.id} />
           </div>
         </div>
       </div>

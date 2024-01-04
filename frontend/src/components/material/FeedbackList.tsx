@@ -13,7 +13,7 @@ export default function FeedbackList({ feedbacks }: FeedbackListProps) {
           <div
             key={f.id}
             className={
-              "mb-8 rounded-2xl border border-dotted border-gray-300 pb-8 pe-4 ps-4 pt-8"
+              "mb-8 rounded-2xl border border-dotted border-gray-300 bg-white pb-8 pe-4 ps-4 pt-4"
             }
           >
             <span className={"font-inter text-gray-500"}>
