@@ -65,7 +65,7 @@ public class RecipeController {
                 return Sort.by("averageRating").descending().and(Sort.by("title"));
             }).orElse(Sort.by("createdAt").descending()));
 
-        Page<Recipe> result = recipeRepository.findAllByIdLessThan(pageable, 20);
+        Page<Recipe> result = recipeRepository.findAllByIdLessThan(pageable, 40);
         var newPage = result.map(RecipeDto::forRecipe);
         return PageResponse.of(newPage);
     }

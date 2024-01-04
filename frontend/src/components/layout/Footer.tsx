@@ -5,7 +5,7 @@ export default function Footer() {
         className={"container mx-auto flex h-full items-center justify-between"}
       >
         <p>Dummy content only. Do not cook 👮‍.</p>
-        <p>https://github.com/nilshartmann/larifari</p>
+        <p>https://nilshartmann.net</p>
       </div>
     </footer>
   );
