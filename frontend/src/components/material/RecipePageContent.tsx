@@ -8,6 +8,7 @@ import { formatMinuteDuration } from "../FormatMinuteDuration.tsx";
 import { FeedbackForm } from "./FeedbackForm.tsx";
 import FeedbackListLoader from "./FeedbackListLoader.tsx";
 import LoadingIndicator from "../LoadingIndicator.tsx";
+import "./RecipePage.css";
 
 type RecipePageContentProps = {
   recipe: DetailedRecipeDto;
@@ -15,7 +16,12 @@ type RecipePageContentProps = {
 
 export function RecipePageContent({ recipe }: RecipePageContentProps) {
   return (
-    <div className={"mb-20"}>
+    <div
+      className={"mb-20"}
+      style={{
+        "--recipe-bg-image": `url('/images/recipes/food_${recipe.id}.png')`,
+      }}
+    >
       <div className={"container mx-auto mt-4"}>
         <NavButtonBar align={"left"}>
           <Button>
@@ -23,9 +29,9 @@ export function RecipePageContent({ recipe }: RecipePageContentProps) {
           </Button>
         </NavButtonBar>
       </div>
-      <div className="mt-4  bg-goldgray pb-12 pe-8 ps-8 pt-12 ">
+      <div className={`recipify-header-wrap mt-4 pb-12 pe-8 ps-8 pt-12`}>
         <div
-          className={"container mx-auto flex flex-col sm:flex-row sm:space-x-8"}
+          className={"flex-cols m:flex-row container mx-auto flex sm:space-x-8"}
         >
           <div className={"sm:w-1/2"}>
             <div className={"flex h-full flex-col justify-between"}>
@@ -70,11 +76,13 @@ export function RecipePageContent({ recipe }: RecipePageContentProps) {
             </div>
           </div>
           <div className={"sm:w-1/2"}>
-            <img
-              className="mt-2 w-full rounded object-cover sm:mt-4 sm:max-h-80"
-              src={`/images/recipes/food_${recipe.id}.png`}
-              alt={recipe.title}
-            />
+            <div className={"overflow-hidden"}>
+              <img
+                className="mt-2 w-full transform rounded object-cover transition-all duration-1000 ease-in-out hover:scale-125 sm:mt-4 sm:max-h-80 "
+                src={`/images/recipes/food_${recipe.id}.png`}
+                alt={recipe.title}
+              />
+            </div>
           </div>
         </div>
       </div>
