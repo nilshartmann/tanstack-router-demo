@@ -9,22 +9,44 @@ type AddFeedbackFormProps = {
   recipeId: string;
 };
 
-export function AddFeedbackForm({ recipeId }: AddFeedbackFormProps) {
-  const [commenter, setCommenter] = useState("");
-  const [stars, setStars] = useState(-1);
-  const [comment, setComment] = useState("");
+type FormState = {
+  commenter: string;
+  stars: number;
+  comment: string;
+};
 
-  const mutation = useAddFeedbackMutation();
+export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
+  const [formState, setFormState] = useState<FormState>({
+    commenter: "",
+    stars: -1,
+    comment: "",
+  });
+
+  const mutation = useAddFeedbackMutation(recipeId);
+
+  const formDisabled = mutation.isPending;
+
+  const handleChange = (e: {
+    target: { name: string; value: string | number };
+  }) => {
+    mutation.reset();
+    setFormState((f) => ({
+      ...f,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSave = async () => {
     const r = await mutation.mutateAsync({
-      recipeId,
-      commenter,
-      stars,
-      comment,
+      payload: formState,
     });
 
     console.log("RESULT", r);
+    setFormState({
+      commenter: "",
+      stars: 0,
+      comment: "",
+    });
   };
 
   return (
@@ -39,45 +61,74 @@ export function AddFeedbackForm({ recipeId }: AddFeedbackFormProps) {
 
         <div className={"mb-8"}>
           <Input
+            disabled={formDisabled}
+            name={"commenter"}
             className={
               "rounded-lg border-gray-300 pb-6 pt-6 hover:outline hover:outline-orange_2 focus:outline focus:outline-orange_2"
             }
-            value={commenter}
-            onChange={(e) => setCommenter(e.target.value)}
+            value={formState.commenter}
+            onChange={handleChange}
           />
         </div>
 
         <div className={"mb-4 font-medium"}>Your rating:</div>
 
         <div className={"mb-8"}>
-          <RatingInput stars={stars} onStarsChange={setStars} />
+          <RatingInput
+            stars={formState.stars}
+            onStarsChange={(setter) =>
+              handleChange({
+                target: { name: "stars", value: setter(formState.stars) },
+              })
+            }
+            disabled={formDisabled}
+          />
         </div>
 
         <div className={"mb-4 font-medium"}>Your comment:</div>
         <div className={"mb-2"}>
           <Textarea
             rows={4}
+            name={"comment"}
             className={
               "rounded-lg border-gray-300 pb-6 pt-3 focus:outline focus:outline-orange_2"
             }
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={formState.comment}
+            onChange={handleChange}
+            disabled={formDisabled}
           />
         </div>
         <div className={"mb-4 flex w-full items-center"}>
           <span
-            className={twMerge("text-sm", comment.length > 500 && "text-red")}
+            className={twMerge(
+              "text-sm",
+              formState.comment.length > 500 && "text-red",
+            )}
           >
-            {comment.length}/500 characters
+            {formState.comment.length}/500 characters
           </span>
         </div>
         <div>
           <ButtonBar align={"end"}>
-            <Button>
-              <button onClick={() => handleSave()}>Submit Rating</button>
+            <Button disabled={formDisabled}>
+              <button onClick={() => handleSave()} disabled={formDisabled}>
+                Submit Rating
+              </button>
             </Button>
           </ButtonBar>
         </div>
+        {mutation.isSuccess && (
+          <div>
+            <div className={"mt-4 font-medium text-green"}>
+              Thanks for your submission!
+            </div>
+          </div>
+        )}
+        {mutation.isError && (
+          <div>
+            <div className={"mt-4 font-medium text-red"}>Submission failed</div>
+          </div>
+        )}
       </div>
     </>
   );
@@ -86,9 +137,10 @@ export function AddFeedbackForm({ recipeId }: AddFeedbackFormProps) {
 type RatingInputProps = {
   stars: number;
   onStarsChange: (action: (newStars: number) => number) => void;
+  disabled?: boolean;
 };
 
-function RatingInput({ stars, onStarsChange }: RatingInputProps) {
+function RatingInput({ stars, onStarsChange, disabled }: RatingInputProps) {
   const [hoverStarNo, setHoverStarNo] = useState(-1);
 
   const starClassName = (starNo: number) => {
@@ -100,10 +152,13 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
     return twMerge(
       "fa-star cursor-pointer pe-2 text-orange_2 focus:outline focus:outline-orange_2",
       starNo > 0 && "ps-2",
-      isSelected || (starNo >= stars && isHovered) ? "fa-solid" : "fa-regular",
+      isSelected || (starNo >= stars && isHovered && !disabled)
+        ? "fa-solid"
+        : "fa-regular",
       isAnyHovered && isSelected && starNo > hoverStarNo && "text-orange_2-200",
       !isAnyHovered && isSelected && "text-gray-500",
       !isAnyHovered && !isSelected && "text-gray-300",
+      "disabled:cursor-default disabled:text-gray-300 disabled:hover:text-gray-300",
     );
   };
 
@@ -115,7 +170,8 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
 
   return (
     <div className={"flex w-full items-center justify-between text-lg"}>
-      <i
+      <button
+        disabled={disabled}
         onClick={() => handleSelectStar(0)}
         className={starClassName(0)}
         onFocus={() => setHoverStarNo(0)}
@@ -123,7 +179,8 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
         onMouseEnter={() => setHoverStarNo(0)}
         onMouseLeave={() => handleStarLeave(0)}
       />
-      <i
+      <button
+        disabled={disabled}
         onClick={() => handleSelectStar(1)}
         className={starClassName(1)}
         onFocus={() => setHoverStarNo(1)}
@@ -131,7 +188,8 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
         onMouseEnter={() => setHoverStarNo(1)}
         onMouseLeave={() => handleStarLeave(1)}
       />
-      <i
+      <button
+        disabled={disabled}
         onClick={() => handleSelectStar(2)}
         className={starClassName(2)}
         onFocus={() => setHoverStarNo(2)}
@@ -139,7 +197,8 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
         onMouseEnter={() => setHoverStarNo(2)}
         onMouseLeave={() => handleStarLeave(2)}
       />
-      <i
+      <button
+        disabled={disabled}
         onClick={() => handleSelectStar(3)}
         className={starClassName(3)}
         onFocus={() => setHoverStarNo(3)}
@@ -147,7 +206,8 @@ function RatingInput({ stars, onStarsChange }: RatingInputProps) {
         onMouseEnter={() => setHoverStarNo(3)}
         onMouseLeave={() => handleStarLeave(3)}
       />
-      <i
+      <button
+        disabled={disabled}
         onClick={() => handleSelectStar(4)}
         className={starClassName(4)}
         onFocus={() => setHoverStarNo(4)}

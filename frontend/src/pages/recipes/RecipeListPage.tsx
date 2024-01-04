@@ -17,7 +17,11 @@ type CheckButtonProps = {
 export function CheckButton({ checked, children, orderBy }: CheckButtonProps) {
   return (
     <Button checked={checked}>
-      <Link search={(s) => ({ ...s, orderBy: orderBy })} disabled={checked}>
+      <Link
+        to={recipeListRoute.to}
+        search={(s) => ({ ...s, orderBy: orderBy })}
+        disabled={checked}
+      >
         <CheckLabel checked={checked}>{children}</CheckLabel>
       </Link>
     </Button>
@@ -82,6 +86,7 @@ export default function RecipeListPage() {
           <PaginationBar totalPages={result.data.totalPages} currentPage={page}>
             {(btn) => (
               <Link
+                from={recipeListRoute.fullPath}
                 disabled={btn.disabled}
                 search={(s) => ({
                   ...s,

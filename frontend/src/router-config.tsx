@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import {
-  defer,
   NotFoundRoute,
   Outlet,
   RootRoute,
@@ -16,7 +15,6 @@ import ShopingListPage from "./pages/recipes/$recipeId/shoppinglist/ShoppingList
 import AboutPage from "./pages/AboutPage.tsx";
 import { PrivacyPage } from "./pages/PrivacyPage.tsx";
 import DefaultPageLayout from "./pages/DefaultPageLayout.tsx";
-import { fetchFeedbacks, fetchRecipe } from "./components/material/fetchers.ts";
 import LandingPage from "./pages/LandingPage.tsx";
 
 const rootRoute = new RootRoute({
@@ -89,14 +87,6 @@ export const recipeRoute = new Route({
     return recipesLayoutRoute;
   },
 
-  loader: async ({ params }) => {
-    const feedbacksPromise = defer(fetchFeedbacks(params.recipeId));
-    const recipe = await fetchRecipe(params.recipeId);
-    return {
-      recipe,
-      feedbacksPromise,
-    };
-  },
   component: RecipePage,
 });
 

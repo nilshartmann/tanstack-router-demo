@@ -3,10 +3,11 @@ import { NavButtonBar } from "../NavButtonBar.tsx";
 import { Button } from "../Button.tsx";
 import { Link } from "@tanstack/react-router";
 import { RatingStars } from "../RatingStars.tsx";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { formatMinuteDuration } from "../FormatMinuteDuration.tsx";
-import { RecipeRatings } from "./RecipeRatings.tsx";
-import { AddFeedbackForm } from "./AddFeedbackForm.tsx";
+import { FeedbackForm } from "./FeedbackForm.tsx";
+import FeedbackListLoader from "./FeedbackListLoader.tsx";
+import LoadingIndicator from "../LoadingIndicator.tsx";
 
 type RecipePageContentProps = {
   recipe: DetailedRecipeDto;
@@ -170,8 +171,15 @@ export function RecipePageContent({ recipe }: RecipePageContentProps) {
         </div>
         <div className={"w-1/3"}>
           <div className={"border-1 w-full rounded-2xl bg-goldgray p-8"}>
-            <RecipeRatings />
-            <AddFeedbackForm recipeId={recipe.id} />
+            <h2 className={"mb-4 font-space text-3xl font-bold"}>Ratings</h2>
+            <Suspense
+              fallback={
+                <LoadingIndicator>Loading feedback...</LoadingIndicator>
+              }
+            >
+              <FeedbackListLoader recipeId={recipe.id} />
+            </Suspense>
+            <FeedbackForm recipeId={recipe.id} />
           </div>
         </div>
       </div>

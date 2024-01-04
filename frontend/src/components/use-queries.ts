@@ -1,5 +1,6 @@
 import {
   useMutation,
+  useQueryClient,
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
@@ -62,23 +63,49 @@ export function useGetRecipeFeedbacksQuery(
 }
 
 type AddFeedbackMutationProps = {
-  recipeId: string;
-  commenter: string;
-  stars: number;
-  comment: string;
+  payload: {
+    commenter: string;
+    stars: number;
+    comment: string;
+  };
 };
 
-export function useAddFeedbackMutation() {
+export function useAddFeedbackMutation(recipeId: string) {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ["..."],
-    mutationFn: ({ recipeId, ...feedbackData }: AddFeedbackMutationProps) => {
+    mutationKey: ["POST", "recipes", recipeId, "feedbacks"],
+    mutationFn: ({ payload }: AddFeedbackMutationProps) => {
       return fetchFromApi(
         getEndpointConfig("post", "/api/recipes/{recipeId}/feedbacks"),
         {
           path: { recipeId },
-          body: {
-            feedbackData,
-          },
+          body: { feedbackData: payload },
+        },
+      );
+    },
+    onSuccess: (newFeedback) => {
+      queryClient.setQueryData(
+        ["recipes", recipeId, "feedbacks"],
+        (oldData: unknown) => {
+          console.log("ON SUCCESS", newFeedback, oldData);
+          if (!oldData) {
+            return oldData;
+          }
+          const result = GetRecipeFeedbacksResponse.safeParse(oldData);
+          if (!result.success) {
+            console.log("Unknown query data in cache", result, oldData);
+            return oldData;
+          }
+
+          const oldFeedbacks = result.data;
+
+          const newData = {
+            ...oldFeedbacks,
+            feedbacks: [...oldFeedbacks.feedbacks, newFeedback.newFeedback],
+          } satisfies GetRecipeFeedbacksResponse;
+
+          console.log("NEW DATA", newData);
+          return newData;
         },
       );
     },

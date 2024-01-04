@@ -45,6 +45,7 @@ export function BookmarkButton({ recipeId }: BookmarkButtonProps) {
         onClick={(e) => {
           e.preventDefault();
           navigate({
+            from: recipeListRoute.fullPath,
             search: (s) => ({
               ...s,
               bookmarkedRecipeIds: updateBookmarks(

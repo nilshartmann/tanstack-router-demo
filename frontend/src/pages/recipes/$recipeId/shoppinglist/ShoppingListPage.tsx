@@ -23,7 +23,9 @@ export default function ShoppingListPage() {
       </h2>
 
       <h1 className={"mb-8 mt-4 font-space text-5xl font-bold hover:underline"}>
-        <Link to={recipeRoute.to}>{recipe.title}</Link>
+        <Link to={recipeRoute.to} params={{ recipeId }}>
+          {recipe.title}
+        </Link>
       </h1>
 
       {recipe.ingredients.map((i) => {

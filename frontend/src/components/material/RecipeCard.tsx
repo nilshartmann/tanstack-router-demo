@@ -22,7 +22,7 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <div className={"flex flex-col justify-between"}>
       <div>
-        <Link to={recipe.id}>
+        <Link to={recipeRoute.to} params={{ recipeId: recipe.id }}>
           <div className={"overflow-hidden"}>
             <img
               className="mb-2 h-48 max-h-full w-full max-w-full transform rounded object-cover transition-all duration-500 ease-in-out hover:scale-110"

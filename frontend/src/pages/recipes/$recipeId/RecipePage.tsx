@@ -1,8 +1,10 @@
 import { recipeRoute } from "../../../router-config.tsx";
 import { RecipePageContent } from "../../../components/material/RecipePageContent.tsx";
+import { useGetRecipeQuery } from "../../../components/use-queries.ts";
 
 export default function RecipePage() {
-  const { recipe } = recipeRoute.useLoaderData();
+  const { recipeId } = recipeRoute.useParams();
+  const { data } = useGetRecipeQuery(recipeId);
 
-  return <RecipePageContent recipe={recipe} />;
+  return <RecipePageContent recipe={data.recipe} />;
 }
