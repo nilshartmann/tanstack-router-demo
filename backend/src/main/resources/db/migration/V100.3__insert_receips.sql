@@ -1262,4 +1262,5 @@ VALUES (128, 40, 'Add beef broth to the pot, and let it simmer. This will combin
 INSERT INTO public.instructions (id, recipe_id, description, order_no)
 VALUES (129, 40, 'Pour soup into ovenproof bowls, top each with a slice of bread and some shredded Gruyère. The bread adds a crunch that contrasts nicely with the soft onions.', 3);
 
-INSERT INTO public.instructions (id, recipe_id, description, order_no) VALUES (130, 40, 'Put the bowls under your oven broiler until the cheese has melted and bubbly. Watch closely to avoid burning!', 4);-- @formatter:on
+INSERT INTO public.instructions (id, recipe_id, description, order_no) VALUES (130, 40, 'Put the bowls under your oven broiler until the cheese has melted and bubbly. Watch closely to avoid burning!', 4);
+-- @formatter:on

@@ -1,5 +1,31 @@
 import z from "zod";
 
+export type NewFeedback = z.infer<typeof NewFeedback>;
+export const NewFeedback = z.object({
+  commenter: z.string(),
+  stars: z.union([z.number(), z.undefined()]).optional(),
+  comment: z.string(),
+});
+
+export type PostFeedbackRequest = z.infer<typeof PostFeedbackRequest>;
+export const PostFeedbackRequest = z.object({
+  feedbackData: NewFeedback,
+});
+
+export type Feedback = z.infer<typeof Feedback>;
+export const Feedback = z.object({
+  id: z.union([z.number(), z.undefined()]).optional(),
+  createdAt: z.string(),
+  commenter: z.string(),
+  rating: z.number(),
+  comment: z.string(),
+});
+
+export type PostFeedbackResponse = z.infer<typeof PostFeedbackResponse>;
+export const PostFeedbackResponse = z.object({
+  newFeedback: Feedback,
+});
+
 export type CategoryDto = z.infer<typeof CategoryDto>;
 export const CategoryDto = z.object({
   type: z.string(),
@@ -65,21 +91,37 @@ export const GetRecipeResponse = z.object({
   recipe: DetailedRecipeDto,
 });
 
-export type Feedback = z.infer<typeof Feedback>;
-export const Feedback = z.object({
-  id: z.union([z.number(), z.undefined()]).optional(),
-  createdAt: z.string(),
-  commenter: z.string(),
-  rating: z.number(),
-  comment: z.string(),
-});
-
 export type GetRecipeFeedbacksResponse = z.infer<
   typeof GetRecipeFeedbacksResponse
 >;
 export const GetRecipeFeedbacksResponse = z.object({
   feedbacks: z.array(Feedback),
 });
+
+export type get_GetFeedbacks = typeof get_GetFeedbacks;
+export const get_GetFeedbacks = {
+  method: z.literal("GET"),
+  path: z.literal("/api/recipes/{recipeId}/feedbacks"),
+  parameters: z.object({
+    path: z.object({
+      recipeId: z.string(),
+    }),
+  }),
+  response: GetRecipeFeedbacksResponse,
+};
+
+export type post_AddFeedback = typeof post_AddFeedback;
+export const post_AddFeedback = {
+  method: z.literal("POST"),
+  path: z.literal("/api/recipes/{recipeId}/feedbacks"),
+  parameters: z.object({
+    path: z.object({
+      recipeId: z.string(),
+    }),
+    body: PostFeedbackRequest,
+  }),
+  response: PostFeedbackResponse,
+};
 
 export type get_Recipes = typeof get_Recipes;
 export const get_Recipes = {
@@ -107,24 +149,15 @@ export const get_GetRecipe = {
   response: GetRecipeResponse,
 };
 
-export type get_GetFeedbacks = typeof get_GetFeedbacks;
-export const get_GetFeedbacks = {
-  method: z.literal("GET"),
-  path: z.literal("/api/recipes/{recipeId}/feedbacks"),
-  parameters: z.object({
-    path: z.object({
-      recipeId: z.string(),
-    }),
-  }),
-  response: GetRecipeFeedbacksResponse,
-};
-
 // <EndpointByMethod>
 export const EndpointByMethod = {
   get: {
+    "/api/recipes/{recipeId}/feedbacks": get_GetFeedbacks,
     "/api/recipes": get_Recipes,
     "/api/recipes/{recipeId}": get_GetRecipe,
-    "/api/recipes/{recipeId}/feedbacks": get_GetFeedbacks,
+  },
+  post: {
+    "/api/recipes/{recipeId}/feedbacks": post_AddFeedback,
   },
 };
 export type EndpointByMethod = typeof EndpointByMethod;
@@ -132,6 +165,7 @@ export type EndpointByMethod = typeof EndpointByMethod;
 
 // <EndpointByMethod.Shorthands>
 export type GetEndpoints = EndpointByMethod["get"];
+export type PostEndpoints = EndpointByMethod["post"];
 export type AllEndpoints = EndpointByMethod[keyof EndpointByMethod];
 // </EndpointByMethod.Shorthands>
 
@@ -201,6 +235,17 @@ export class ApiClient {
     >;
   }
   // </ApiClient.get>
+
+  // <ApiClient.post>
+  post<Path extends keyof PostEndpoints, TEndpoint extends PostEndpoints[Path]>(
+    path: Path,
+    ...params: MaybeOptionalArg<z.infer<TEndpoint["parameters"]>>
+  ): Promise<z.infer<TEndpoint["response"]>> {
+    return this.fetcher("post", this.baseUrl + path, params[0]) as Promise<
+      z.infer<TEndpoint["response"]>
+    >;
+  }
+  // </ApiClient.post>
 }
 
 export function createApiClient(fetcher: Fetcher, baseUrl?: string) {

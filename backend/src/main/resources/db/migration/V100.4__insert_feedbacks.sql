@@ -139,3 +139,5 @@ INSERT INTO feedbacks (id, created_at, commenter, rating, comment, recipe_id) VA
 INSERT INTO feedbacks (id, created_at, commenter, rating, comment, recipe_id) VALUES (70, '2024-04-13 05:48:24.878037', 'Noah Turner', 5, 'Lemon pepper chicken wings are a crowd-pleaser. Perfect for game day gatherings.', 30);
 INSERT INTO feedbacks (id, created_at, commenter, rating, comment, recipe_id) VALUES (28, '2024-04-16 09:32:32.710013', 'Benjamin Robinson', 4, 'Lemon herb quinoa salad. A light and nutritious option for lunch or a side dish.', 28);
 INSERT INTO feedbacks (id, created_at, commenter, rating, comment, recipe_id) VALUES (999, '2024-04-13 11:16:41.245402', 'Susi Smith', 1, 'Homemade chocolate chip cookies are a classic treat. Soft and chewy perfection!', 10);
+
+ALTER SEQUENCE feedbacks_id_seq RESTART WITH 1000;

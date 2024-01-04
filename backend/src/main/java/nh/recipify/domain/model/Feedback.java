@@ -30,7 +30,7 @@ public class Feedback {
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="recipe_id", nullable = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
     @JsonIgnore
     private Recipe recipe;
 
@@ -52,6 +52,17 @@ public class Feedback {
 
     public String getComment() {
         return comment;
+    }
+
+    protected Feedback() {
+    }
+
+    public Feedback(Recipe recipe, String commenter, Integer rating, String comment) {
+        this.createdAt = LocalDateTime.now();
+        this.recipe = recipe;
+        this.commenter = commenter;
+        this.rating = rating;
+        this.comment = comment;
     }
 
     @Override

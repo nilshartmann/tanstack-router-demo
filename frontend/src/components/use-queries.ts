@@ -1,4 +1,5 @@
 import {
+  useMutation,
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
@@ -53,6 +54,30 @@ export function useGetRecipeFeedbacksQuery(
         {
           path: {
             recipeId,
+          },
+        },
+      );
+    },
+  });
+}
+
+type AddFeedbackMutationProps = {
+  recipeId: string;
+  commenter: string;
+  stars: number;
+  comment: string;
+};
+
+export function useAddFeedbackMutation() {
+  return useMutation({
+    mutationKey: ["..."],
+    mutationFn: ({ recipeId, ...feedbackData }: AddFeedbackMutationProps) => {
+      return fetchFromApi(
+        getEndpointConfig("post", "/api/recipes/{recipeId}/feedbacks"),
+        {
+          path: { recipeId },
+          body: {
+            feedbackData,
           },
         },
       );

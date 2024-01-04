@@ -6,6 +6,47 @@ servers:
 - url: http://localhost:8080
   description: Generated server url
 paths:
+  /api/recipes/{recipeId}/feedbacks:
+    get:
+      tags:
+      - recipe-controller
+      operationId: getFeedbacks
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecipeFeedbacksResponse'
+    post:
+      tags:
+      - recipe-controller
+      operationId: addFeedback
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostFeedbackRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostFeedbackResponse'
   /api/recipes:
     get:
       tags:
@@ -57,26 +98,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRecipeResponse'
-  /api/recipes/{recipeId}/feedbacks:
-    get:
-      tags:
-      - recipe-controller
-      operationId: getFeedbacks
-      parameters:
-      - name: recipeId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetRecipeFeedbacksResponse'
 components:
   schemas:
+    NewFeedback:
+      required:
+      - comment
+      - commenter
+      type: object
+      properties:
+        commenter:
+          type: string
+        stars:
+          maximum: 5
+          minimum: 0
+          type: integer
+          format: int32
+        comment:
+          type: string
+    PostFeedbackRequest:
+      required:
+      - feedbackData
+      type: object
+      properties:
+        feedbackData:
+          $ref: '#/components/schemas/NewFeedback'
+    Feedback:
+      required:
+      - comment
+      - commenter
+      - createdAt
+      - rating
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        commenter:
+          type: string
+        rating:
+          type: integer
+          format: int32
+        comment:
+          type: string
+    PostFeedbackResponse:
+      required:
+      - newFeedback
+      type: object
+      properties:
+        newFeedback:
+          $ref: '#/components/schemas/Feedback'
     CategoryDto:
       required:
       - description
@@ -229,27 +302,6 @@ components:
           type: integer
           format: int32
         description:
-          type: string
-    Feedback:
-      required:
-      - comment
-      - commenter
-      - createdAt
-      - rating
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        createdAt:
-          type: string
-          format: date-time
-        commenter:
-          type: string
-        rating:
-          type: integer
-          format: int32
-        comment:
           type: string
     GetRecipeFeedbacksResponse:
       required:

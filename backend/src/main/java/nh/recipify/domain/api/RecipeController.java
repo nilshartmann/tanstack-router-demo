@@ -1,7 +1,10 @@
 package nh.recipify.domain.api;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import nh.recipify.domain.FeedbackService;
+import nh.recipify.domain.NewFeedback;
 import nh.recipify.domain.model.Feedback;
 import nh.recipify.domain.model.FeedbackRepository;
 import nh.recipify.domain.model.Recipe;
@@ -26,6 +29,7 @@ public class RecipeController {
 
     private final RecipeRepository recipeRepository;
     private final FeedbackRepository feedbackRepository;
+    private final FeedbackService feedbackService;
 
     // ------------------------------------------------------------------------
     // -- Use for demo to simulate slowness of our backend
@@ -34,9 +38,10 @@ public class RecipeController {
     public static long slowDown_GetRecipe = 0;
     public static long slowDown_GetFeedbacks = 0;
 
-    public RecipeController(RecipeRepository recipeRepository, FeedbackRepository feedbackRepository) {
+    public RecipeController(RecipeRepository recipeRepository, FeedbackRepository feedbackRepository, FeedbackService feedbackService) {
         this.recipeRepository = recipeRepository;
         this.feedbackRepository = feedbackRepository;
+        this.feedbackService = feedbackService;
     }
 
     enum ReceipeSort {
@@ -94,6 +99,22 @@ public class RecipeController {
 
         return new GetRecipeFeedbacksResponse(feedbacks);
     }
+
+    record PostFeedbackRequest(@Valid @NotNull NewFeedback feedbackData) {
+    }
+
+    record PostFeedbackResponse(@NotNull Feedback newFeedback) {
+    }
+
+    @PostMapping("/recipes/{recipeId}/feedbacks")
+    PostFeedbackResponse addFeedback(@StringParameter @PathVariable long recipeId,
+                                     @Valid @RequestBody PostFeedbackRequest addFeedbackRequest) {
+
+        var newFeedback = feedbackService.addFeedback(recipeId, addFeedbackRequest.feedbackData());
+
+        return new PostFeedbackResponse(newFeedback);
+    }
+
 
     void sleepFor(long duration) {
         if (duration > 0) {

@@ -8,4 +8,6 @@ public interface FeedbackRepository extends Repository<Feedback, Long> {
 
     List<Feedback> getFeedbacksByRecipeIdOrderByCreatedAtDesc(Long recipeId);
 
+    Feedback save(Feedback feedback);
+
 }
