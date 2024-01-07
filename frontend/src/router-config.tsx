@@ -6,6 +6,7 @@ import {
   RootRoute,
   Route,
   Router,
+  ScrollRestoration,
 } from "@tanstack/react-router";
 import RecipesPageLayout from "./pages/recipes/RecipesPageLayout.tsx";
 import z from "zod";
@@ -16,13 +17,14 @@ import AboutPage from "./pages/AboutPage.tsx";
 import { PrivacyPage } from "./pages/PrivacyPage.tsx";
 import DefaultPageLayout from "./pages/DefaultPageLayout.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const rootRoute = new RootRoute({
   component: () => (
     <>
-      {/*<ScrollRestoration />*/}
+      <ScrollRestoration />
       <Outlet />
-      {/*<TanStackRouterDevtools />*/}
+      <TanStackRouterDevtools />
     </>
   ),
 });

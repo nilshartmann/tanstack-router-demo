@@ -4,9 +4,25 @@ This is my sample application for the [TanStack Router](https://tanstack.com/rou
 
 ![Screenshot of example application](screenshot.png)
 
+### Techstack
+
+**Backend:**
+
+- Java (JDK21), Spring Boot 3.2
+- Postgres 16
+
+**Frontend**
+
+- React 18
+- TypeScript
+- Vite
+- TanStack Router and TanStack Query
+- TypeScript and zod-Code for typesafe API access is automatically generated from OpenAPI definitions.
+  - You can find [more on that here](https://github.com/nilshartmann/end-to-end-typesafety-spring-boot-typescript).
+
 ## Running the backend
 
-The backend that provides the API is implemented with Spring Boot and Java.
+The backend that provides the API is implemented with Java and Spring Boot.
 
 In order to run it, you either have to use Java or use the prebuild Docker Image.
 
@@ -31,6 +47,12 @@ pnpm dev
 ```
 
 The frontend runs on http://localhost:8090
+
+### Folder structure
+
+The folder structure in the frontend is optimized for my demo and workshop needs. It is not a good example for a real world folder structure, so please don't copy it for your own projects.
+
+Also not that mixing TanStack Query with loaders from TanStack Router would be different in a real app. Here I mix both approaches just to show their usage. In a real project I would either go TanStack Query (for data fetching) only or use TanStack Query inside the loader of a route.
 
 ## A note on the content
 
