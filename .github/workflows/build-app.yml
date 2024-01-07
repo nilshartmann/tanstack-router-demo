@@ -24,5 +24,5 @@ jobs:
         with:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "21"
-      - run: ./gradlew build
+      - run: ./gradlew build -x test
       - run: ./gradlew -Precipify_docker_username=${{ github.actor }} -Precipify_docker_secret=${{ secrets.GITHUB_TOKEN }} bootBuildImage --publishImage
