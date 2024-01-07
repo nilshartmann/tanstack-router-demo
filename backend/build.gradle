@@ -36,3 +36,25 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+def githubSha = System.getenv('GITHUB_SHA');
+def shortSha = githubSha != null ? githubSha.substring(0, 7) : "local";
+def dockerTag = "ghcr.io/nilshartmann/${project.name}:${shortSha}"
+println(dockerTag)
+
+tasks.named("bootBuildImage") {
+	imageName = "ghcr.io/nilshartmann/${project.name}:${project.version}"
+	tags = [dockerTag]
+
+	// Conntect Package with GitHub Repository
+	environment["BP_OCI_SOURCE"] = "https://github.com/nilshartmann/recipify"
+
+	docker {
+		publishRegistry {
+			// Properties set in Github Action file
+			username = getProperty('recipify_docker_username')
+			password = getProperty('recipify_docker_secret')
+		}
+	}
+}

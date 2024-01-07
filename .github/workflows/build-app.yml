@@ -1,0 +1,28 @@
+on:
+  - push
+
+jobs:
+  app-backend:
+    env:
+      REGISTRY: ghcr.io
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install JDK21
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "21"
+      - run: ./gradlew build
+      - run: ./gradlew -Precipify_docker_username=${{ github.actor }} -Precipify_docker_secret=${{ secrets.GITHUB_TOKEN }} bootBuildImage --publishImage
