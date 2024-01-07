@@ -11,6 +11,13 @@ jobs:
       run:
         working-directory: ./backend
     steps:
+      - name: Get short SHA
+        id: sha
+        run: echo "::set-output name=short::$(echo ${GITHUB_SHA} | cut -c 1-7)"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -24,5 +31,13 @@ jobs:
         with:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "21"
-      - run: ./gradlew build -x test
-      - run: ./gradlew -Precipify_docker_username=${{ github.actor }} -Precipify_docker_secret=${{ secrets.GITHUB_TOKEN }} bootBuildImage --publishImage
+      - run: ./gradlew bootJar -x test
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/${{ github.actor }}/recipify-backend:latest
+            ghcr.io/${{ github.actor }}/recipify-backend:${{ steps.sha.outputs.short }}
