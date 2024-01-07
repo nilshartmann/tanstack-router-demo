@@ -11,4 +11,4 @@ ARG JAR_FILE=build/libs/*.jar
 ADD ${JAR_FILE} recipify-backend.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","/recipify-backend"]
+ENTRYPOINT ["java","-jar","/recipify-backend.jar"]
