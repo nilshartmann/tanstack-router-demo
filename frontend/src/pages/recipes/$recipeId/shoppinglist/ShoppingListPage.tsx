@@ -12,37 +12,49 @@ export default function ShoppingListPage() {
   } = useGetRecipeQuery(recipeId);
 
   return (
-    <div className={"container mx-auto mt-8 md:w-1/2"}>
-      <NavButtonBar align={"left"}>
-        <Button>
-          <Link to={"/recipes"}>Back to {recipe.title}</Link>
-        </Button>
-      </NavButtonBar>
-      <h2 className={"mb-4 mt-4 font-space text-2xl font-bold"}>
-        Shopping list
-      </h2>
+    <>
+      <div className={"container mx-auto mt-4"}>
+        <NavButtonBar align={"left"}>
+          <Button>
+            <Link
+              from={shoppingListRoute.fullPath}
+              to={recipeRoute.to}
+              params={{ recipeId }}
+            >
+              Back to {recipe.title}
+            </Link>
+          </Button>
+        </NavButtonBar>
+      </div>
+      <div className={"container mx-auto mt-8 md:w-1/2"}>
+        <h2 className={"mb-4 mt-4 font-space text-2xl font-bold"}>
+          Shopping list
+        </h2>
 
-      <h1 className={"mb-8 mt-4 font-space text-5xl font-bold hover:underline"}>
-        <Link to={recipeRoute.to} params={{ recipeId }}>
-          {recipe.title}
-        </Link>
-      </h1>
+        <h1
+          className={"mb-8 mt-4 font-space text-5xl font-bold hover:underline"}
+        >
+          <Link to={recipeRoute.to} params={{ recipeId }}>
+            {recipe.title}
+          </Link>
+        </h1>
 
-      {recipe.ingredients.map((i) => {
-        return (
-          <div
-            className={
-              "mb-8 border-b border-dotted border-gray-300 pb-8  text-2xl"
-            }
-            key={i.name}
-          >
-            <i className="fa-regular fa-square me-4 "></i>
-            <span className={"font-inter text-gray-900 "}>
-              {i.amount} {i.unit} {i.name}
-            </span>
-          </div>
-        );
-      })}
-    </div>
+        {recipe.ingredients.map((i) => {
+          return (
+            <div
+              className={
+                "mb-8 border-b border-dotted border-gray-300 pb-8  text-2xl"
+              }
+              key={i.name}
+            >
+              <i className="fa-regular fa-square me-4 "></i>
+              <span className={"font-inter text-gray-900 "}>
+                {i.amount} {i.unit} {i.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
