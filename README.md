@@ -1,10 +1,13 @@
 # Recipify: TanStack Router Demo
 
+
 This is my sample application for the [TanStack Router](https://tanstack.com/router/v1) for React.
+
+I recorded a video on TanStack Router, that uses this demo example. You can find the [video on YouTube](https://youtu.be/KkrS_wfFq2I).
 
 ![Screenshot of example application](screenshot.png)
 
-I recorded a video on TanStack Router, that uses this demo example. You can find the [video on YouTube](https://youtu.be/KkrS_wfFq2I).
+
 
 ### Techstack
 
